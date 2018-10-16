@@ -19,6 +19,10 @@ function createWindow() {
    */
   mainWindow = new BrowserWindow({
     height: 563,
+    minHeight: 100,
+    minWidth: 100,
+    show: false,
+    title: 'RSS Feed Reader',
     useContentSize: true,
     width: 1000,
   });
@@ -28,11 +32,24 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+
+  /**
+   * Prevent "pop-in" from happening by making sure the window
+   * isn't shown until the content within is loaded.
+   */
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+  });
 }
 
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
+  /**
+   * It's common on OSX to keep the app alive even after
+   * closing all windows of the app, so this makes sure
+   * that expected behavior is maintained.
+   */
   if (process.platform !== 'darwin') {
     app.quit();
   }

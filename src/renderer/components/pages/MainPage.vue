@@ -10,6 +10,6 @@
 
 <script>
   export default {
-    name: 'home-page',
+    name: 'main-page',
   };
 </script>

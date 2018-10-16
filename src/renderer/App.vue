@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id='app'>
     <router-view></router-view>
   </div>
 </template>
@@ -9,7 +9,3 @@
     name: 'rss',
   };
 </script>
-
-<style>
-  /* CSS */
-</style>
