@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "author": "Parker Sprouse <parker@parkersprouse.me>",
   "description": "A desktop RSS feed reader",
-  "license": "ISC",
+  "license": "MIT",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
