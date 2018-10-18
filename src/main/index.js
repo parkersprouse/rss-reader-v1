@@ -19,8 +19,8 @@ function createWindow() {
    */
   mainWindow = new BrowserWindow({
     height: 563,
-    minHeight: 100,
-    minWidth: 100,
+    minHeight: 500,
+    minWidth: 500,
     // show: false,
     title: 'RSS Feed Reader',
     useContentSize: true,

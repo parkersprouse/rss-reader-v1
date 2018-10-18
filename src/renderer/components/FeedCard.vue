@@ -5,12 +5,12 @@
     </div>
   </el-card>
   <el-card class='box-card feed-card' v-else-if='feed'>
-    <div slot='header'>
+    <div slot='header' class='feed-header'>
       <span>{{ feed.title }}</span>
     </div>
     <div class='feed-body'>
       <div v-for='i in feed.items' :key='i.guid' style='margin-bottom: 2rem;'>
-        <a @click='visit(i.link)' href='#'>{{ i.title }}</a>
+        <a @click='visit(i.link)'>{{ i.title }}</a>
       </div>
     </div>
   </el-card>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-  import { shell } from 'electron'; /* eslint-disable-line */
+  import { shell } from 'electron';
   import RSS from 'rss-parser';
   import utils from '@/lib/utils';
 
