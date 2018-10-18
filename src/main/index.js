@@ -21,7 +21,7 @@ function createWindow() {
     height: 563,
     minHeight: 100,
     minWidth: 100,
-    show: false,
+    // show: false,
     title: 'RSS Feed Reader',
     useContentSize: true,
     width: 1000,
@@ -37,9 +37,9 @@ function createWindow() {
    * Prevent "pop-in" from happening by making sure the window
    * isn't shown until the content within is loaded.
    */
-  mainWindow.once('ready-to-show', () => {
-    mainWindow.show();
-  });
+  // mainWindow.once('ready-to-show', () => {
+  //   mainWindow.show();
+  // });
 }
 
 app.on('ready', createWindow);

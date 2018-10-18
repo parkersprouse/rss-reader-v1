@@ -1,23 +1,32 @@
 <template>
   <div>
-    main container
+    <el-row :gutter="20">
+      <el-col :span="8">
+        <feed-card src='https://feeds.feedburner.com/Metalsucks' />
+      </el-col>
+      <el-col :span="8">
+        <feed-card src='https://feeds.feedburner.com/Metalsucks' />
+      </el-col>
+      <el-col :span="8">
+        <feed-card src='https://feeds.feedburner.com/Metalsucks' />
+      </el-col>
+      <el-col :span="8">
+        <feed-card src='https://feeds.feedburner.com/Metalsucks' />
+      </el-col>
+      <el-col :span="8">
+        <feed-card src='https://feeds.feedburner.com/Metalsucks' />
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-  import RSS from 'rss-parser';
-  const parser = new RSS();
+  import FeedCard from '@/components/FeedCard';
 
   export default {
     name: 'main-container',
-    mounted() {
-      this.doParse();
-    },
-    methods: {
-      async doParse() {
-        const feed = await parser.parseURL('https://www.reddit.com/r/smite/.rss');
-        console.log(feed);
-      },
+    components: {
+      'feed-card': FeedCard,
     },
   };
 </script>
