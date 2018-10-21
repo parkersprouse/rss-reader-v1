@@ -9,8 +9,13 @@
       <span>{{ feed.title }}</span>
     </div>
     <div class='feed-body'>
-      <div v-for='i in feed.items' :key='i.guid' style='margin-bottom: 2rem;'>
-        <a @click='visit(i.link)'>{{ i.title }}</a>
+      <div v-for='i in feed.items' :key='i.created' style='margin-bottom: 2rem;'>
+        <a @click='visit(i.link)'>
+          {{ i.title }}
+          <p v-if='i.enclosures'>
+            <img :src='i.enclosures[0].url' style='max-width: 100%;' />
+          </p>
+        </a>
       </div>
     </div>
   </el-card>
@@ -21,10 +26,7 @@
 
 <script>
   import { shell } from 'electron';
-  import RSS from 'rss-parser';
-  import utils from '@/lib/utils';
-
-  const parser = new RSS();
+  import RSS from 'rss-to-json';
 
   export default {
     name: 'main-container',
@@ -41,20 +43,16 @@
       };
     },
     mounted() {
-      this.fetchFeed();
+      RSS.load(this.src, (err, rss) => {
+        if (!err) {
+          this.feed = rss;
+          console.log(rss);
+        } else {
+          this.error = 'Unable to fetch feed';
+        }
+      });
     },
     methods: {
-      async fetchFeed() {
-        // const data = await parser.parseURL(this.src);
-        // this.feed = data;
-        const [err, data] = await utils.call(parser.parseURL(this.src));
-        if (err) {
-          this.error = 'Unable to fetch feed';
-          return;
-        }
-        console.log(data);
-        this.feed = data;
-      },
       visit(link) {
         shell.openExternal(link);
       },
