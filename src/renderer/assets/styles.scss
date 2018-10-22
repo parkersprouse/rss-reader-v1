@@ -2,18 +2,19 @@ $sidebar-width: 200px;
 
 @import url('https://fonts.googleapis.com/css?family=Muli:400,700,900');
 
-* {
-  cursor: default;
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
+// * {
+//   cursor: default;
+//   user-select: none;
+//   -webkit-user-select: none;
+//   -moz-user-select: none;
+//   -ms-user-select: none;
+// }
 
-a,
-button {
-  cursor: pointer;
-}
+// a,
+// a > *,
+// button {
+//   cursor: pointer;
+// }
 
 body {
   margin: 0;

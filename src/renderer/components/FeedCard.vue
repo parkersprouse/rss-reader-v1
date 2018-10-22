@@ -12,7 +12,7 @@
       <div v-for='i in feed.items' :key='i.created' style='margin-bottom: 2rem;'>
         <a @click='visit(i.link)'>
           {{ i.title }}
-          <p v-if='i.enclosures'>
+          <p v-if='i.enclosures && i.enclosures.length > 0'>
             <img :src='i.enclosures[0].url' style='max-width: 100%;' />
           </p>
         </a>
@@ -26,7 +26,7 @@
 
 <script>
   import { shell } from 'electron';
-  import RSS from 'rss-to-json';
+  import parse from '@/lib/feedparser/feedparser-promised';
 
   export default {
     name: 'main-container',
@@ -43,14 +43,14 @@
       };
     },
     mounted() {
-      RSS.load(this.src, (err, rss) => {
-        if (!err) {
-          this.feed = rss;
-          console.log(rss);
-        } else {
-          this.error = 'Unable to fetch feed';
-        }
-      });
+      parse(this.src)
+        .then((feed) => {
+          console.log(feed);
+          this.feed = feed;
+        })
+        .catch(() => {
+          this.error = 'Unable to parse feed';
+        });
     },
     methods: {
       visit(link) {

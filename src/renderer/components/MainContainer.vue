@@ -24,6 +24,10 @@
     },
     mounted() {
       this.feeds = db.get('feeds').value();
+      this.$root.$on('newFeedAdded', () => {
+        this.feeds = db.get('feeds').value();
+        this.$forceUpdate(); // We need to refresh the component when we get a new feed
+      });
     },
   };
 </script>
