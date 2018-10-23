@@ -1,4 +1,11 @@
 /* eslint-disable */
+
+/*
+Copied from https://github.com/alabeduarte/feedparser-promised
+and adjusted to return the feed's meta data as well as items instead
+of just the items
+*/
+
 import request from 'request';
 import FeedParser from './feedparser';
 

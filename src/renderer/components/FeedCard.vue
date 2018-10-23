@@ -1,12 +1,25 @@
 <template>
-  <el-card class='box-card' v-if='error'>
-    <div>
-      {{ error }}
+  <el-card class='box-card feed-card' v-if='error'>
+    <div slot='header' class='feed-header'>
+      <span>&nbsp;</span>
+      <el-button icon='el-icon-close'
+                 style='float: right; padding: 3px'
+                 type='danger'
+                 @click='deleteFeed'></el-button>
+    </div>
+    <div class='feed-body'>
+      <div style='margin-bottom: 2rem;'>
+        {{ error }}
+      </div>
     </div>
   </el-card>
   <el-card class='box-card feed-card' v-else-if='feed'>
     <div slot='header' class='feed-header'>
       <span>{{ feed.title }}</span>
+      <el-button icon='el-icon-close'
+                 style='float: right; padding: 3px'
+                 type='danger'
+                 @click='deleteFeed'></el-button>
     </div>
     <div class='feed-body'>
       <div v-for='i in feed.items' :key='i.created' style='margin-bottom: 2rem;'>
@@ -26,6 +39,7 @@
 
 <script>
   import { shell } from 'electron';
+  import db from '@/lib/db';
   import parse from '@/lib/feedparser/feedparser-promised';
 
   export default {
@@ -45,7 +59,6 @@
     mounted() {
       parse(this.src)
         .then((feed) => {
-          console.log(feed);
           this.feed = feed;
         })
         .catch(() => {
@@ -53,6 +66,11 @@
         });
     },
     methods: {
+      deleteFeed() {
+        const feeds = db.get('feeds');
+        feeds.splice(feeds.indexOf(this.src), 1).write();
+        this.$root.$emit('feedDeleted');
+      },
       visit(link) {
         shell.openExternal(link);
       },

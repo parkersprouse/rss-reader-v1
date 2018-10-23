@@ -1,7 +1,7 @@
 <template>
   <div v-if='feeds'>
     <el-row :gutter='20'>
-      <el-col :span='8' v-for='feed in feeds' :key='feed'>
+      <el-col :sm='11' :md='8' :lg='6' :xl='4' v-for='feed in feeds' :key='feed'>
         <feed-card :src='feed' />
       </el-col>
     </el-row>
@@ -24,10 +24,14 @@
     },
     mounted() {
       this.feeds = db.get('feeds').value();
-      this.$root.$on('newFeedAdded', () => {
+      this.$root.$on('newFeedAdded', this.updateFeeds);
+      this.$root.$on('feedDeleted', this.updateFeeds);
+    },
+    methods: {
+      updateFeeds() {
         this.feeds = db.get('feeds').value();
-        this.$forceUpdate(); // We need to refresh the component when we get a new feed
-      });
+        this.$forceUpdate(); // We need to refresh the component when we update feeds
+      },
     },
   };
 </script>
