@@ -22,12 +22,10 @@
                  @click='deleteFeed'></el-button>
     </div>
     <div class='feed-body'>
-      <div v-for='i in feed.items' :key='i.created' style='margin-bottom: 2rem;'>
-        <a @click='visit(i.link)'>
+      <div v-for='i in feed.items' :key='i.created'>
+        <a @click='visit(i.link)' href='#'>
           {{ i.title }}
-          <p v-if='i.enclosures && i.enclosures.length > 0'>
-            <img :src='i.enclosures[0].url' style='max-width: 100%;' />
-          </p>
+          <img v-if='i.enclosures && i.enclosures.length > 0' :src='i.enclosures[0].url' />
         </a>
       </div>
     </div>
@@ -59,6 +57,7 @@
     mounted() {
       parse(this.src)
         .then((feed) => {
+          console.log(feed);
           this.feed = feed;
         })
         .catch(() => {

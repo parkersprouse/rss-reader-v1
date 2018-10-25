@@ -1,5 +1,5 @@
 <template>
-  <div v-if='feeds'>
+  <div v-if='feeds' id='feeds-container'>
     <el-row :gutter='20'>
       <el-col :sm='11' :md='8' :lg='6' :xl='4' v-for='feed in feeds' :key='feed'>
         <feed-card :src='feed' />
