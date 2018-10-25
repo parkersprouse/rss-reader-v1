@@ -23,7 +23,7 @@
     </div>
     <div class='feed-body'>
       <div v-for='i in feed.items' :key='i.created' style='margin-bottom: 2rem;'>
-        <a @click='visit(i.link)'>
+        <a @click='visit(i.link)' href='#'>
           {{ i.title }}
           <p v-if='i.enclosures && i.enclosures.length > 0'>
             <img :src='i.enclosures[0].url' style='max-width: 100%;' />

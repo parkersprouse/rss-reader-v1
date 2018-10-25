@@ -1,6 +1,7 @@
-$sidebar-width: 200px;
-
 @import url('https://fonts.googleapis.com/css?family=Muli:400,700,900');
+
+$sidebar-width: 200px;
+$titlebar-height: 20px;
 
 // * {
 //   cursor: default;
@@ -22,6 +23,21 @@ body {
   font-family: 'Muli', sans-serif;
 }
 
+#titlebar {
+  height: $titlebar-height;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: red;
+  position: fixed;
+  -webkit-app-region: drag;
+  z-index: 1000;
+}
+
+#container {
+  margin-top: $titlebar-height;
+}
+
 #sidebar {
   position: fixed;
   height: 100%;
@@ -29,10 +45,10 @@ body {
   background-color: #222222;
   color: #bbbbbb;
   overflow-x: hidden;
-  top: 0;
+  top: $titlebar-height;
   left: 0;
   padding-top: 1rem;
-  z-index: 666;
+  z-index: 1001;
 }
 
 #main {
@@ -40,6 +56,9 @@ body {
   padding: 1rem;
 }
 
+#feeds-container {
+  margin-bottom: -1rem;
+}
 
 // -----------------------------------------------------------------------------
 /*#region Feed Cards */
