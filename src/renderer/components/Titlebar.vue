@@ -10,7 +10,7 @@
       <button @click='maximizeWindow'>
         <i class='el-icon-plus'></i>
       </button>
-      <button @click='closeWindow'>
+      <button @click='closeWindow' class='titlebar-close'>
         <i class='el-icon-close'></i>
       </button>
     </div>
