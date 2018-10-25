@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-input placeholder='Feed URL' v-model='new_feed' style='margin-bottom: 0.5rem;'></el-input>
-    <el-button style='width: 100%;' type='info' @click='submitNewFeed'>Save</el-button>
+    <el-button style='width: 100%;' type='info' @click='submitNewFeed'>Add</el-button>
   </div>
 </template>
 
