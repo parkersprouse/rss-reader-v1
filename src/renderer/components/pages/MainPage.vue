@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div id='titlebar'>
-      <custom-titlebar />
-    </div>
+    <custom-titlebar />
     <div id='container'>
       <div id='sidebar'>
         <rss-sidebar />
