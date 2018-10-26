@@ -16,6 +16,18 @@ body {
   padding: 0;
 }
 
+.separator-vertical {
+  color: #555555;
+}
+
+.v--modal-overlay {
+  background: rgba(50, 50, 50, 0.7);
+}
+
+.v--modal {
+  padding: 1rem;
+}
+
 
 // -----------------------------------------------------------------------------
 /*#region Container Definitions */
@@ -83,8 +95,18 @@ body {
   -ms-overflow-style: none;
   overflow: auto;
   padding: .5rem;
+  position: relative;
   -webkit-overflow-scrolling: touch;
   width: $sidebar-width;
+
+  .settings-btn {
+    bottom: 2.25rem;
+    height: 35px;
+    left: -0.25rem;
+    padding: 0;
+    position: absolute;
+    width: 35px;
+  }
 }
 
 #main {

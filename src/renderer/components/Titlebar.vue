@@ -4,6 +4,10 @@
       RSS Feed Reader
     </div>
     <div id='titlebar-right'>
+      <button @click="$modal.show('settings-panel')">
+        <i class='fas fa-cog'></i>
+      </button>
+      &nbsp;<span class='separator-vertical'>|</span>&nbsp;
       <button @click='minimizeWindow'>
         <i class='el-icon-minus'></i>
       </button>
@@ -14,14 +18,25 @@
         <i class='el-icon-close'></i>
       </button>
     </div>
+
+    <settings-panel />
   </div>
 </template>
 
 <script>
   import { remote } from 'electron';
+  import SettingsPanel from '@/components/SettingsPanel';
 
   export default {
     name: 'titlebar',
+    components: {
+      'settings-panel': SettingsPanel,
+    },
+    data() {
+      return {
+        settings_panel_open: false,
+      };
+    },
     methods: {
       closeWindow() {
         const window = remote.getCurrentWindow();
@@ -38,6 +53,9 @@
       minimizeWindow() {
         const window = remote.getCurrentWindow();
         window.minimize();
+      },
+      openSettingsPanel() {
+        console.log('hello');
       },
     },
   };

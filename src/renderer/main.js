@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import ElementUI from 'element-ui';
+import vmodal from 'vue-js-modal';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/styles.scss';
 
@@ -10,6 +11,7 @@ import router from './router';
 
 Vue.use(require('vue-electron'));
 Vue.use(ElementUI);
+Vue.use(vmodal, { componentName: 'vue-modal' });
 
 Vue.http = Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
