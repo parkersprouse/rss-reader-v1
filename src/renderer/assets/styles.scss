@@ -28,6 +28,31 @@ body {
   padding: 1rem;
 }
 
+.settings-panel-btns {
+  border-top: 1px solid #dcdfe6;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.el-message {
+
+  &.el-message--success {
+    background-color: #d4edda;
+    border: 1px solid #afd2b7;
+
+    .el-icon-check,
+    .el-message__content {
+      color: #155724;
+    }
+
+    .el-icon-check {
+      margin-right: 10px;
+    }
+  }
+}
+
 
 // -----------------------------------------------------------------------------
 /*#region Container Definitions */

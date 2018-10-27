@@ -7,4 +7,8 @@ if (!db.has('feeds').value()) {
   db.defaults({ feeds: [] }).write();
 }
 
+if (!db.has('settings').value()) {
+  db.defaults({ settings: {} }).write();
+}
+
 export default db;

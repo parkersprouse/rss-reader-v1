@@ -1,7 +1,15 @@
 <template>
   <div>
-    <el-input placeholder='Feed URL' v-model='new_feed' style='margin-bottom: 0.5rem;'></el-input>
-    <el-button style='width: 100%;' type='info' @click='submitNewFeed'>Add</el-button>
+    <div>
+      <el-input placeholder='Feed URL' v-model='new_feed' style='margin-bottom: 0.5rem;'></el-input>
+      <el-button style='width: 100%;' type='info' @click='submitNewFeed'>Add</el-button>
+    </div>
+    <div>
+      <el-button style='width: 100%; margin-top: 2rem;' type='info' icon='el-icon-refresh'
+                @click='refreshFeeds'>
+        Refresh Feeds
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -16,6 +24,16 @@
       };
     },
     methods: {
+      refreshFeeds() {
+        this.$root.$emit('feedsRefreshed');
+        this.$message({
+          customClass: 'el-message--success',
+          duration: 1500,
+          iconClass: 'el-icon-check',
+          message: 'Feeds Refreshed',
+          type: 'success',
+        });
+      },
       submitNewFeed() {
         if (!this.new_feed) return;
 

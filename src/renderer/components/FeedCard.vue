@@ -57,18 +57,29 @@
     mounted() {
       parse(this.src)
         .then((feed) => {
-          console.log(feed);
           this.feed = feed;
         })
         .catch(() => {
           this.error = 'Unable to parse feed';
         });
+
+      this.$root.$on('feedsRefreshed', this.refreshFeed);
     },
     methods: {
       deleteFeed() {
         const feeds = db.get('feeds');
         feeds.splice(feeds.indexOf(this.src), 1).write();
         this.$root.$emit('feedDeleted');
+      },
+      refreshFeed() {
+        parse(this.src)
+          .then((feed) => {
+            this.feed = feed;
+            this.$forceUpdate();
+          })
+          .catch(() => {
+            this.error = 'Unable to parse feed';
+          });
       },
       visit(link) {
         shell.openExternal(link);

@@ -4,7 +4,7 @@
       RSS Feed Reader
     </div>
     <div id='titlebar-right'>
-      <button @click="$modal.show('settings-panel')">
+      <button @click='openSettingsPanel'>
         <i class='fas fa-cog'></i>
       </button>
       &nbsp;<span class='separator-vertical'>|</span>&nbsp;
@@ -55,7 +55,7 @@
         window.minimize();
       },
       openSettingsPanel() {
-        console.log('hello');
+        this.$modal.show('settings-panel');
       },
     },
   };
