@@ -17,6 +17,8 @@
 
 <script>
   import db from '@/lib/db';
+  import timer from '@/lib/timer';
+
   const settings = db.get('settings');
 
   export default {
@@ -25,17 +27,27 @@
       return {
         settings: {
           auto_refresh: settings.value().auto_refresh || false,
-          auto_refresh_interval: settings.value().auto_refresh_interval || '',
+          auto_refresh_interval: ((settings.value().auto_refresh_interval / 1000) / 60) || '',
         },
       };
+    },
+    mounted() {
+      // When initially loading the app, start the auto refresh if settings tell us to
+      if (this.settings.auto_refresh && this.settings.auto_refresh_interval) {
+        timer.set(() => this.$root.$emit('feedsRefreshed'), settings.value().auto_refresh_interval);
+      }
     },
     methods: {
       closePanel() {
         this.$modal.hide('settings-panel');
       },
       saveSettings() {
+        const interval_in_minutes = this.settings.auto_refresh_interval * 1000 * 60;
+        const timer_changed = interval_in_minutes !== settings.value().auto_refresh_interval ||
+                              this.settings.auto_refresh !== settings.value().auto_refresh;
+
         db.set('settings.auto_refresh', this.settings.auto_refresh)
-          .set('settings.auto_refresh_interval', this.settings.auto_refresh_interval)
+          .set('settings.auto_refresh_interval', interval_in_minutes)
           .write();
         this.$message({
           customClass: 'el-message--success',
@@ -44,6 +56,15 @@
           message: 'Settings Saved',
           type: 'success',
         });
+
+        // Restart the auto refresh timer if the settings tell us to
+        if (timer_changed) {
+          if (this.settings.auto_refresh && this.settings.auto_refresh_interval) {
+            timer.set(() => this.$root.$emit('feedsRefreshed'), interval_in_minutes);
+          } else {
+            timer.stop();
+          }
+        }
       },
     },
   };

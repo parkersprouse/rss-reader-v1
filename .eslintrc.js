@@ -16,6 +16,7 @@ module.exports = {
     'html'
   ],
   'rules': {
+    'camelcase': 0,
     'global-require': 0,
     'import/no-unresolved': 0,
     'no-param-reassign': 0,
