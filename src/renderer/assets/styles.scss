@@ -5,9 +5,13 @@
 
 $sidebar-width: 200px;
 $titlebar-height: 30px;
+$separator-color: #555555;
 
 /*#endregion */
 
+
+// -----------------------------------------------------------------------------
+/*#region General Settings */
 
 body {
   font-family: 'Muli', sans-serif;
@@ -17,7 +21,15 @@ body {
 }
 
 .separator-vertical {
-  color: #555555;
+  color: $separator-color;
+}
+
+.separator-horizonal {
+  background-color: $separator-color;
+  border-color: $separator-color;
+  color: $separator-color;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 .v--modal-overlay {
@@ -25,6 +37,7 @@ body {
 }
 
 .v--modal {
+  color: #606266;
   padding: 1rem;
 }
 
@@ -41,10 +54,12 @@ body {
   &.el-message--success {
     background-color: #d4edda;
     border: 1px solid #afd2b7;
+    font-weight: bold;
 
     .el-icon-check,
     .el-message__content {
       color: #155724;
+      font-weight: bold;
     }
 
     .el-icon-check {
@@ -52,6 +67,8 @@ body {
     }
   }
 }
+
+/*#endregion */
 
 
 // -----------------------------------------------------------------------------
@@ -184,6 +201,16 @@ body {
       }
     }
   }
+}
+
+.feed-card-title {
+  cursor: default;
+  display: inline-block;
+  max-width: 85%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-user-select: none;
+  white-space: nowrap;
 }
 
 /*#endregion */

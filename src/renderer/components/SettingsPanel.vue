@@ -4,8 +4,9 @@
       <el-form-item label='Auto-refresh Feeds'>
         <el-switch v-model='settings.auto_refresh'></el-switch>
       </el-form-item>
-      <el-form-item label='Auto-refresh Interval (minutes)'>
+      <el-form-item label='Auto-refresh Interval'>
         <el-input-number v-model='settings.auto_refresh_interval' :min='1'></el-input-number>
+        <span style='margin-left: 0.5rem;'>minutes</span>
       </el-form-item>
     </el-form>
     <div class='settings-panel-btns'>
@@ -27,7 +28,7 @@
       return {
         settings: {
           auto_refresh: settings.value().auto_refresh || false,
-          auto_refresh_interval: ((settings.value().auto_refresh_interval / 1000) / 60) || '',
+          auto_refresh_interval: ((settings.value().auto_refresh_interval / 1000) / 60) || 1,
         },
       };
     },

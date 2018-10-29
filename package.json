@@ -56,6 +56,7 @@
     "electron-util": "^0.9.1",
     "element-ui": "^2.4.8",
     "feedparser": "^2.2.9",
+    "lodash": "^4.17.11",
     "lowdb": "^1.0.0",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",

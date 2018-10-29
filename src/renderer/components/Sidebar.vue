@@ -2,11 +2,13 @@
   <div>
     <div>
       <el-input placeholder='Feed URL' v-model='new_feed' style='margin-bottom: 0.5rem;'></el-input>
-      <el-button style='width: 100%;' type='info' @click='submitNewFeed'>Add</el-button>
+      <el-button @click='submitNewFeed' icon='el-icon-circle-plus-outline' style='width: 100%;' type='info'>
+        Add
+      </el-button>
     </div>
+    <hr class='separator-horizonal' />
     <div>
-      <el-button style='width: 100%; margin-top: 2rem;' type='info' icon='el-icon-refresh'
-                @click='refreshFeeds'>
+      <el-button @click='refreshFeeds' icon='el-icon-refresh' style='width: 100%;' type='info'>
         Refresh Feeds
       </el-button>
     </div>

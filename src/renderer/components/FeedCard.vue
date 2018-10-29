@@ -15,7 +15,7 @@
   </el-card>
   <el-card class='box-card feed-card' v-else-if='feed'>
     <div slot='header' class='feed-header'>
-      <span>{{ feed.title }}</span>
+      <div class='feed-card-title' :title='feed.title'>{{ feed.title }}</div>
       <el-button icon='el-icon-close'
                  style='float: right; padding: 3px'
                  type='danger'
@@ -37,6 +37,7 @@
 
 <script>
   import { shell } from 'electron';
+  import _ from 'lodash';
   import db from '@/lib/db';
   import parse from '@/lib/feedparser/feedparser-promised';
 
@@ -55,14 +56,7 @@
       };
     },
     mounted() {
-      parse(this.src)
-        .then((feed) => {
-          this.feed = feed;
-        })
-        .catch(() => {
-          this.error = 'Unable to parse feed';
-        });
-
+      this.refreshFeed();
       this.$root.$on('feedsRefreshed', this.refreshFeed);
     },
     methods: {
@@ -74,8 +68,9 @@
       refreshFeed() {
         parse(this.src)
           .then((feed) => {
-            this.feed = feed;
-            this.$forceUpdate();
+            const new_feed = { ...feed };
+            new_feed.items = _.sortBy(feed.items, ['pubdate']).reverse();
+            this.feed = new_feed;
           })
           .catch(() => {
             this.error = 'Unable to parse feed';
