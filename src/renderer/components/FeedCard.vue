@@ -71,6 +71,7 @@
             const new_feed = { ...feed };
             new_feed.items = _.sortBy(feed.items, ['pubdate']).reverse();
             this.feed = new_feed;
+            console.log(feed);
           })
           .catch(() => {
             this.error = 'Unable to parse feed';

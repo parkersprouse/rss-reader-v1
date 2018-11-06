@@ -152,6 +152,7 @@ body {
 }
 
 #main {
+  background-color: #36393F;
   flex: 1;
   height: auto;
   margin-bottom: 1rem;
@@ -168,12 +169,20 @@ body {
 /*#region Feed Cards */
 
 .feed-card {
+  background-color: transparent;
+  border: 1px solid black;
   margin-bottom: 1rem;
 
   .el-card__header {
     background-color: #343434;
+    border-bottom: 1px solid black;
     color: #dddddd;
     font-weight: bold;
+  }
+
+  .el-card__body {
+    background-color: #3d3d3d;
+    color: #eeeeee;
   }
 }
 
@@ -188,11 +197,11 @@ body {
     padding-bottom: 1rem;
 
     &:not(:last-child) {
-      border-bottom: 1px dashed #656565;
+      border-bottom: 1px dashed #eeeeee;
     }
 
     a {
-      color: black;
+      color: #eeeeee;
       text-decoration: none;
 
       img {
