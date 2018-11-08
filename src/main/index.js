@@ -18,6 +18,7 @@ function createWindow() {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
+    backgroundColor: 'rgb(63, 65, 71)',
     frame: false, // process.platform === 'darwin',
     height: 563,
     minHeight: 500,

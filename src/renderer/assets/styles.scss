@@ -13,7 +13,12 @@ $separator-color: #555555;
 // -----------------------------------------------------------------------------
 /*#region General Settings */
 
+html {
+  background-color: rgb(63, 65, 71);
+}
+
 body {
+  background-color: rgb(63, 65, 71);
   font-family: 'Muli', sans-serif;
   margin: 0;
   overflow: hidden;
@@ -68,6 +73,25 @@ body {
   }
 }
 
+.no-feeds {
+
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+
+  > span {
+    color: #202225;
+    cursor: default;
+    display: block;
+    font-size: 3em;
+    font-weight: bold;
+    height: fit-content;
+    margin-top: -2em;
+    text-align: center;
+  }
+}
+
 /*#endregion */
 
 
@@ -88,6 +112,10 @@ body {
   -webkit-app-region: drag;
   -webkit-user-select: none;
   z-index: 1000;
+
+  #titlebar-left {
+    font-weight: bold;
+  }
 
   #titlebar-right {
     padding-bottom: 2px;
@@ -165,6 +193,7 @@ body {
   overflow: auto;
   padding: 1rem;
   -webkit-overflow-scrolling: touch;
+  -webkit-user-select: none;
 }
 
 /*#endregion */
@@ -177,7 +206,6 @@ body {
   background-color: transparent;
   border: 1px solid black;
   margin-bottom: 1rem;
-  -webkit-user-select: none;
 
   .el-card__header {
     background-color: #2F3136;

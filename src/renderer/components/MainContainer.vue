@@ -1,5 +1,9 @@
 <template>
-  <div v-if='feeds' id='feeds-container'>
+  <div v-if='!feeds' id='feeds-container'></div>
+  <div v-else-if='feeds.length === 0' id='feeds-container' class='no-feeds'>
+    <span>You have no feeds</span>
+  </div>
+  <div v-else id='feeds-container'>
     <el-row :gutter='20'>
       <draggable element='el-col' :list='feeds' @update='handleChange'>
         <el-col :sm='11' :md='8' :lg='6' :xl='4' v-for='feed in feeds' :key='feed'>
