@@ -18,13 +18,13 @@ function createWindow() {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    frame: process.platform === 'darwin',
+    frame: false, // process.platform === 'darwin',
     height: 563,
     minHeight: 500,
     minWidth: 500,
     // show: false,
     title: 'RSS Feed Reader',
-    titleBarStyle: process.platform === 'darwin' ? 'hidden' : 'default',
+    // titleBarStyle: process.platform === 'darwin' ? 'hidden' : 'default',
     useContentSize: true,
     width: 1000,
   });

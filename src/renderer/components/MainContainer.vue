@@ -1,20 +1,24 @@
 <template>
   <div v-if='feeds' id='feeds-container'>
     <el-row :gutter='20'>
-      <el-col :sm='11' :md='8' :lg='6' :xl='4' v-for='feed in feeds' :key='feed'>
-        <feed-card :src='feed' />
-      </el-col>
+      <draggable element='el-col' :list='feeds' @update='handleChange'>
+        <el-col :sm='11' :md='8' :lg='6' :xl='4' v-for='feed in feeds' :key='feed'>
+          <feed-card :src='feed' />
+        </el-col>
+      </draggable>
     </el-row>
   </div>
 </template>
 
 <script>
+  import draggable from 'vuedraggable';
   import db from '@/lib/db';
   import FeedCard from '@/components/FeedCard';
 
   export default {
     name: 'main-container',
     components: {
+      draggable,
       'feed-card': FeedCard,
     },
     data() {
@@ -31,6 +35,9 @@
       updateFeeds() {
         this.feeds = db.get('feeds').value();
         this.$forceUpdate(); // We need to refresh the component when we update feeds
+      },
+      handleChange() {
+        db.set('feeds', this.feeds).write();
       },
     },
   };
