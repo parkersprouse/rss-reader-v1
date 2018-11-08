@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='sidebar-inner'>
     <div>
       <el-input placeholder='Feed URL' v-model='new_feed' style='margin-bottom: 0.5rem;'></el-input>
       <el-button @click='submitNewFeed' icon='el-icon-circle-plus-outline' style='width: 100%;' type='info'>

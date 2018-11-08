@@ -43,6 +43,10 @@
         this.$modal.hide('settings-panel');
       },
       saveSettings() {
+        if (Number.isNaN(Number(this.settings.auto_refresh_interval))) {
+          this.settings.auto_refresh_interval = 1;
+        }
+
         const interval_in_minutes = this.settings.auto_refresh_interval * 1000 * 60;
         const timer_changed = interval_in_minutes !== settings.value().auto_refresh_interval ||
                               this.settings.auto_refresh !== settings.value().auto_refresh;

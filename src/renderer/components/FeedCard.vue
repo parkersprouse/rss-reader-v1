@@ -30,7 +30,7 @@
       </div>
     </div>
   </el-card>
-  <el-card class='box-card' v-else>
+  <el-card class='box-card feed-card' v-else>
     <div v-loading='true'></div>
   </el-card>
 </template>

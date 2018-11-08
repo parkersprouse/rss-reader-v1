@@ -141,6 +141,11 @@ body {
   -webkit-overflow-scrolling: touch;
   width: $sidebar-width;
 
+  .sidebar-inner {
+    height: fit-content;
+    margin-top: 2rem;
+  }
+
   .settings-btn {
     bottom: 2.25rem;
     height: 35px;
@@ -152,7 +157,7 @@ body {
 }
 
 #main {
-  background-color: #36393F;
+  background-color: rgb(63, 65, 71); // #36393F;
   flex: 1;
   height: auto;
   margin-bottom: 1rem;
@@ -172,16 +177,17 @@ body {
   background-color: transparent;
   border: 1px solid black;
   margin-bottom: 1rem;
+  -webkit-user-select: none;
 
   .el-card__header {
-    background-color: #343434;
+    background-color: #2F3136;
     border-bottom: 1px solid black;
     color: #dddddd;
     font-weight: bold;
   }
 
   .el-card__body {
-    background-color: #3d3d3d;
+    background-color: #36393F; // rgb(63, 65, 71);
     color: #eeeeee;
   }
 }
