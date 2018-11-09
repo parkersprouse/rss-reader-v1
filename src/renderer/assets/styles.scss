@@ -7,6 +7,52 @@ $sidebar-width: 200px;
 $titlebar-height: 30px;
 $separator-color: #555555;
 
+$app-bg-color: rgb(63, 65, 71);
+
+$modal-bg-color: rgba(50, 50, 50, 0.7);
+$modal-font-color: #606266;
+
+$message-success-bg-color: #d4edda;
+$message-success-border: 1px solid #afd2b7;
+$message-success-font-color: #155724;
+
+$input-background-color: #484B51;
+$input-font-color: #dddddd;
+
+$button-dark-background-color: #2F3136; // #202225;
+$button-dark-background-color-hover: #18191b;
+$button-dark-font-color: #dddddd;
+$button-dark-font-color-hover: #dddddd;
+
+$titlebar-background-color: #202225;
+$titlebar-font-color: #dddddd;
+
+$sidebar-background-color: #2F3136;
+$sidebar-font-color: #dddddd;
+
+$main-background-color: rgb(63, 65, 71); // #36393F;
+
+$settings-modal-background-color: #2F3136;
+$settings-modal-border: 1px solid black;
+$settings-modal-box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.6);
+$settings-modal-font-color: #dddddd;
+
+$feed-card-background-color: transparent;
+$feed-card-border: 1px solid black;
+$feed-card-header-background-color: #2F3136;
+$feed-card-header-border: 1px solid black;
+$feed-card-header-font-color: #dddddd;
+$feed-card-body-background-color: #36393F; // rgb(63, 65, 71);
+$feed-card-body-font-color: #eeeeee;
+$feed-card-link-border: 1px dashed #eeeeee;
+$feed-card-link-color: #eeeeee;
+
+$scrollbar-track-background-color: rgba(47, 49, 54, 0.5);
+$scrollbar-track-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+$scrollbar-handle-background-color: rgba(32, 34, 37, 0.5);
+$scrollbar-handle-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+$scrollbar-handle-inactive-background-color: rgba(50, 50, 50, 0.4);
+
 /*#endregion */
 
 
@@ -14,11 +60,11 @@ $separator-color: #555555;
 /*#region General Settings */
 
 html {
-  background-color: rgb(63, 65, 71);
+  background-color: $app-bg-color;
 }
 
 body {
-  background-color: rgb(63, 65, 71);
+  background-color: $app-bg-color;
   font-family: 'Muli', sans-serif;
   margin: 0;
   overflow: hidden;
@@ -38,24 +84,24 @@ body {
 }
 
 .v--modal-overlay {
-  background: rgba(50, 50, 50, 0.7);
+  background: $modal-bg-color;
 }
 
 .v--modal {
-  color: #606266;
+  color: $modal-font-color;
   padding: 1rem;
 }
 
 .el-message {
 
   &.el-message--success {
-    background-color: #d4edda;
-    border: 1px solid #afd2b7;
+    background-color: $message-success-bg-color;
+    border: $message-success-border;
     font-weight: bold;
 
     .el-icon-check,
     .el-message__content {
-      color: #155724;
+      color: $message-success-font-color;
       font-weight: bold;
     }
 
@@ -85,20 +131,20 @@ body {
 }
 
 .el-input__inner {
-  background-color: #484B51;
+  background-color: $input-background-color;
   border: none;
-  color: #ddd;
+  color: $input-font-color;
 }
 
 .el-button--dark {
-  background-color: #2F3136; // #202225;
-  border-color: #2F3136; // #202225;
-  color: #ddd;
+  background-color: $button-dark-background-color; 
+  border-color: $button-dark-background-color;
+  color: $button-dark-font-color;
 
   &:focus, &:hover {
-    background-color: #18191b;
-    border-color: #18191b;
-    color: #ddd;
+    background-color: $button-dark-background-color-hover;
+    border-color: $button-dark-background-color-hover;
+    color: $button-dark-font-color-hover;
   }
 }
 
@@ -110,8 +156,8 @@ body {
 
 #titlebar {
   align-items: center;
-  background-color: #202225;
-  color: #dddddd;
+  background-color: $titlebar-background-color;
+  color: $titlebar-font-color;
   cursor: default;
   display: flex;
   height: $titlebar-height;
@@ -168,8 +214,8 @@ body {
 }
 
 #sidebar {
-  background-color: #2F3136;
-  color: #dddddd;
+  background-color: $sidebar-background-color;
+  color: $sidebar-font-color;
   height: auto;
   -ms-overflow-style: none;
   overflow: auto;
@@ -194,7 +240,7 @@ body {
 }
 
 #main {
-  background-color: rgb(63, 65, 71); // #36393F;
+  background-color: $main-background-color;
   flex: 1;
   height: auto;
   margin-bottom: 1rem;
@@ -208,13 +254,13 @@ body {
 #settings-panel {
 
   .v--modal-box.v--modal {
-    background-color: #2F3136;
-    border: 1px solid black;
-    box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.6);
-    color: #dddddd;
+    background-color: $settings-modal-background-color;
+    border: $settings-modal-border;
+    box-shadow: $settings-modal-box-shadow;
+    color: $settings-modal-font-color;
 
     .el-form-item__label {
-      color: #dddddd;
+      color: $settings-modal-font-color;
     }
 
     .el-input-number__increase,
@@ -222,7 +268,7 @@ body {
       background-color: #202225;
       border: none;
       bottom: 0;
-      color: #ddd;
+      color: $settings-modal-font-color;
       top: 0;
 
       &:hover {
@@ -259,20 +305,20 @@ body {
 /*#region Feed Cards */
 
 .feed-card {
-  background-color: transparent;
-  border: 1px solid black;
+  background-color: $feed-card-background-color;
+  border: $feed-card-border;
   margin-bottom: 1rem;
 
   .el-card__header {
-    background-color: #2F3136;
-    border-bottom: 1px solid black;
-    color: #dddddd;
+    background-color: $feed-card-header-background-color;
+    border-bottom: $feed-card-header-border;
+    color: $feed-card-header-font-color;
     font-weight: bold;
   }
 
   .el-card__body {
-    background-color: #36393F; // rgb(63, 65, 71);
-    color: #eeeeee;
+    background-color: $feed-card-body-background-color;
+    color: $feed-card-body-font-color;
   }
 }
 
@@ -287,11 +333,11 @@ body {
     padding-bottom: 1rem;
 
     &:not(:last-child) {
-      border-bottom: 1px dashed #eeeeee;
+      border-bottom: $feed-card-link-border;
     }
 
     a {
-      color: #eeeeee;
+      color: $feed-card-link-color;
       text-decoration: none;
 
       img {
@@ -324,24 +370,24 @@ body {
 
 // Track
 ::-webkit-scrollbar-track {
-  background: rgba(47, 49, 54, 0.5);
+  background: $scrollbar-track-background-color;
   border-radius: 2px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: $scrollbar-track-box-shadow;
   -webkit-border-radius: 2px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: $scrollbar-track-box-shadow;
 }
 
 // Handle
 ::-webkit-scrollbar-thumb {
-  background: rgba(32, 34, 37, 0.5);
+  background: $scrollbar-handle-background-color;
   border-radius: 2px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5); 
+  box-shadow: $scrollbar-handle-box-shadow;
   -webkit-border-radius: 2px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5); 
+  -webkit-box-shadow: $scrollbar-handle-box-shadow; 
 }
 
 // ::-webkit-scrollbar-thumb:window-inactive {
-//   background: rgba(50, 50, 50, 0.4);
+//   background: $scrollbar-handle-inactive-background-color;
 // }
 
 /*#endregion */
