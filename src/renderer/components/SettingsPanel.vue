@@ -1,5 +1,5 @@
 <template>
-  <vue-modal :clickToClose='true' height='auto' name='settings-panel' :scrollable='true'>
+  <vue-modal :clickToClose='true' height='auto' id='settings-panel' name='settings-panel' :scrollable='true'>
     <el-form ref='settings-form' :model='settings' label-width='40%'>
       <el-form-item label='Auto-refresh Feeds'>
         <el-switch v-model='settings.auto_refresh'></el-switch>
@@ -11,7 +11,7 @@
     </el-form>
     <div class='settings-panel-btns'>
       <el-button @click='saveSettings' type='primary'>Save</el-button>
-      <el-button @click='closePanel'>Close</el-button>
+      <el-button @click='closePanel' type='dark'>Close</el-button>
     </div>
   </vue-modal>
 </template>

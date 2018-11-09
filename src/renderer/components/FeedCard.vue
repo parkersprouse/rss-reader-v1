@@ -24,8 +24,8 @@
     <div class='feed-body'>
       <div v-for='i in feed.items' :key='i.created'>
         <a @click='visit(i.link)' href='#'>
+          <img v-if='i.enclosures && i.enclosures.length > 0 && isImage(i.enclosures[0].url)' :src='i.enclosures[0].url' />
           {{ i.title }}
-          <img v-if='i.enclosures && i.enclosures.length > 0' :src='i.enclosures[0].url' />
         </a>
       </div>
     </div>
@@ -40,6 +40,7 @@
   import _ from 'lodash';
   import db from '@/lib/db';
   import parse from '@/lib/feedparser/feedparser-promised';
+  import utils from '@/lib/utils';
 
   export default {
     name: 'main-container',
@@ -60,6 +61,7 @@
       this.$root.$on('feedsRefreshed', this.refreshFeed);
     },
     methods: {
+      isImage: utils.isImage,
       deleteFeed() {
         const feeds = db.get('feeds');
         feeds.splice(feeds.indexOf(this.src), 1).write();
@@ -71,7 +73,6 @@
             const new_feed = { ...feed };
             new_feed.items = _.sortBy(feed.items, ['pubdate']).reverse();
             this.feed = new_feed;
-            console.log(feed);
           })
           .catch(() => {
             this.error = 'Unable to parse feed';
