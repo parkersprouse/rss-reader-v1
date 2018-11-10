@@ -23,7 +23,7 @@
     </div>
     <div class='feed-body'>
       <div v-for='i in feed.items' :key='i.created'>
-        <a @click='visit(i.link)' @contextmenu.prevent='showDetails(i)' href='#'>
+        <a @click='showDetails(i)' @contextmenu.prevent='visit(i.link)' href='#'>
           <img v-if='i.enclosures && i.enclosures.length > 0 && isImage(i.enclosures[0].url)' :src='i.enclosures[0].url' />
           <div id='feed-title'>{{ i.title }}</div>
           <div id='feed-date'>{{ formatDate(i.pubdate) }}</div>
@@ -79,7 +79,6 @@
             const new_feed = { ...feed };
             new_feed.items = _.sortBy(feed.items, ['pubdate']).reverse();
             this.feed = new_feed;
-            console.log(feed);
           })
           .catch(() => {
             this.error = 'Unable to parse feed';
