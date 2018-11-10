@@ -7,11 +7,10 @@ import './assets/styles.scss';
 
 import App from './App';
 import router from './router';
-// import store from './store';
 
 Vue.use(require('vue-electron'));
 Vue.use(ElementUI);
-Vue.use(vmodal, { componentName: 'vue-modal' });
+Vue.use(vmodal, { dynamic: true, injectModalsContainer: true });
 
 Vue.http = Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
@@ -20,6 +19,5 @@ Vue.config.productionTip = false;
 new Vue({
   components: { App },
   router,
-  // store,
   template: '<App />',
 }).$mount('#app');

@@ -23,9 +23,10 @@
     </div>
     <div class='feed-body'>
       <div v-for='i in feed.items' :key='i.created'>
-        <a @click='visit(i.link)' href='#'>
+        <a @click='visit(i.link)' @contextmenu.prevent='showDetails(i)' href='#'>
           <img v-if='i.enclosures && i.enclosures.length > 0 && isImage(i.enclosures[0].url)' :src='i.enclosures[0].url' />
-          {{ i.title }}
+          <div id='feed-title'>{{ i.title }}</div>
+          <div id='feed-date'>{{ formatDate(i.pubdate) }}</div>
         </a>
       </div>
     </div>
@@ -38,9 +39,11 @@
 <script>
   import { shell } from 'electron';
   import _ from 'lodash';
+  import moment from 'moment';
   import db from '@/lib/db';
   import parse from '@/lib/feedparser/feedparser-promised';
   import utils from '@/lib/utils';
+  import ArticlePanel from '@/components/ArticlePanel.vue';
 
   export default {
     name: 'main-container',
@@ -67,16 +70,23 @@
         feeds.splice(feeds.indexOf(this.src), 1).write();
         this.$root.$emit('feedDeleted');
       },
+      formatDate(date) {
+        return moment(date).format('MM/DD/YYYY');
+      },
       refreshFeed() {
         parse(this.src)
           .then((feed) => {
             const new_feed = { ...feed };
             new_feed.items = _.sortBy(feed.items, ['pubdate']).reverse();
             this.feed = new_feed;
+            console.log(feed);
           })
           .catch(() => {
             this.error = 'Unable to parse feed';
           });
+      },
+      showDetails(article) {
+        this.$modal.show(ArticlePanel, { article });
       },
       visit(link) {
         shell.openExternal(link);
