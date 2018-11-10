@@ -86,7 +86,17 @@
           });
       },
       showDetails(article) {
-        this.$modal.show(ArticlePanel, { article });
+        this.$modal.show(
+          ArticlePanel,
+          { article },
+          {
+            clickToClose: true,
+            height: '75%',
+            id: 'article-panel',
+            name: 'article-panel',
+            width: '75%',
+          },
+        );
       },
       visit(link) {
         shell.openExternal(link);
