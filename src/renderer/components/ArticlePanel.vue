@@ -1,14 +1,12 @@
 <template>
-  <div style='height: 100%; overflow: auto;'>
+  <div>
     <div id='article-title'>{{ article.title }}</div>
     <hr />
     <div id='article-date' v-html='formatDate(article.pubdate)'></div>
     <hr />
-    <div id='article-summary' v-html='article.summary'></div>
+    <div id='article-summary' v-html='summary'></div>
     <hr />
     <div id='article-description' v-html='description'></div>
-    <hr />
-    <div id='article-comments'><a @click='visit(article.comments)' href='#'>Comments</a></div>
   </div>
 </template>
 
@@ -24,6 +22,13 @@
         required: true,
       },
     },
+    mounted() {
+      document.addEventListener('click', (event) => {
+        if (!event.target.matches('.article-link')) return;
+        event.preventDefault();
+        this.visit(event.target.href);
+      });
+    },
     methods: {
       formatDate(date) {
         const parsed_date = moment(date);
@@ -35,7 +40,13 @@
     },
     computed: {
       description() {
-        return this.article.description;
+        // const regex = /(href|HREF)\s*=\s*("|').*("|')/gm;
+        const regex = /<a\s+/gm;
+        return this.article.description.replace(regex, '<a class="article-link" ');
+      },
+      summary() {
+        const regex = /<a\s+/gm;
+        return this.article.summary.replace(regex, '<a class="article-link" ');
       },
     },
   };

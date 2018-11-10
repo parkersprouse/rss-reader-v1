@@ -298,6 +298,30 @@ body {
   }
 }
 
+#article-panel {
+  .v--modal-box.v--modal {
+    background-color: $settings-modal-background-color;
+    border: $settings-modal-border;
+    box-shadow: $settings-modal-box-shadow;
+    color: $settings-modal-font-color;
+
+    > div {
+      height: 100%;
+      overflow-y: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+
+      img {
+        max-width: 100%;
+      }
+
+      a {
+        color: #ffffff;
+      }
+    }
+  }
+}
+
 /*#endregion */
 
 
