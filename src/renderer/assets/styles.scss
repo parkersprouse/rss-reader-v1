@@ -315,14 +315,6 @@ body {
       padding-left: 1rem;
       padding-right: 1rem;
 
-      img {
-        max-width: 100%;
-      }
-
-      a {
-        color: #ffffff;
-      }
-
       #article-title {
         text-align: center;
 
@@ -338,20 +330,47 @@ body {
         text-align: center;
       }
 
+      #article-description,
       #article-summary {
-        border-bottom: 1px solid #808080;
         border-top: 1px solid #808080;
+        padding-bottom: 1rem;
+        padding-top: 1rem;
 
-        h3 {
+        > h3 {
           margin-bottom: 1rem;
-          margin-top: 1rem;
+          margin-top: 0;
         }
-      }
 
-      #article-description {
-        h3 {
-          margin-bottom: 1rem;
-          margin-top: 1rem;
+        blockquote {
+          border-left: 10px solid #808080;
+          padding-left: 1rem;
+        }
+  
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          border: 1px solid #808080;
+  
+          th {
+            font-weight: bold;
+            text-align: center;
+          }
+  
+          th, td {
+            border: 1px solid #808080;
+            padding: 0.5rem;
+          }
+        }
+  
+        img {
+          display: block;
+          max-width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+  
+        a {
+          color: #ffffff;
         }
       }
     }

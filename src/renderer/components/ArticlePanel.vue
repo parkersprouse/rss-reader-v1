@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id='article-title' @click='visit'><h2>{{ article.title }}</h2></div>
+    <div id='article-title' @click='visit(article.link)'><h2>{{ article.title }}</h2></div>
     <div id='article-date' v-if='article.pubdate' v-html='pubdate'></div>
     <div id='article-summary' v-if='article.summary'>
       <h3>Summary</h3>
@@ -17,10 +17,11 @@
   import { shell } from 'electron';
   import moment from 'moment';
 
-  const class_regex = /class\s*=\s*("|')[a-zA-Z0-9:;.\s()\-,]*("|')/gmi;
-  const id_regex = /id\s*=\s*("|')[a-zA-Z0-9:;.\s()\-,]*("|')/gmi;
-  const link_regex = /<a\s+/gmi;
-  const style_regex = /style\s*=\s*("|')[a-zA-Z0-9:;.\s()\-,]*("|')/gmi;
+  const class_regex = /class\s*=\s*("|')[a-zA-Z0-9:;%.\s()\-,]*("|')/gmi;
+  const height_regex = /height\s*=\s*("|')[a-zA-Z0-9:;%.\s()\-,]*("|')/gmi;
+  const id_regex = /id\s*=\s*("|')[a-zA-Z0-9:;%.\s()\-,]*("|')/gmi;
+  const style_regex = /style\s*=\s*("|')[a-zA-Z0-9:;%.\s()\-,]*("|')/gmi;
+  const width_regex = /width\s*=\s*("|')[a-zA-Z0-9:;%.\s()\-,]*("|')/gmi;
 
   export default {
     name: 'article-panel',
@@ -40,12 +41,12 @@
     },
     methods: {
       handleLink(event) {
-        if (!event.target.matches('.article-link')) return;
+        if (!event.target.matches('a') && !event.target.parentElement.matches('a')) return;
         event.preventDefault();
-        shell.openExternal(event.target.href);
+        this.visit(event.target.href || event.target.parentElement.href);
       },
-      visit() {
-        shell.openExternal(this.article.link);
+      visit(link) {
+        shell.openExternal(link);
       },
     },
     computed: {
@@ -54,18 +55,20 @@
           .replace(class_regex, '')
           .replace(id_regex, '')
           .replace(style_regex, '')
-          .replace(link_regex, '<a class="article-link" ');
+          .replace(width_regex, '')
+          .replace(height_regex, '');
       },
       pubdate() {
         const parsed_date = moment(this.article.pubdate);
-        return `${parsed_date.format('MM/DD/YYYY')} &bull; ${parsed_date.format('hh:mm a')}`;
+        return `${parsed_date.format('hh:mm a')} &sdot; ${parsed_date.format('dddd, MMMM Do YYYY')}`;
       },
       summary() {
         return this.article.summary
           .replace(class_regex, '')
           .replace(id_regex, '')
           .replace(style_regex, '')
-          .replace(link_regex, '<a class="article-link" ');
+          .replace(width_regex, '')
+          .replace(height_regex, '');
       },
     },
   };
