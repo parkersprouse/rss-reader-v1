@@ -51,7 +51,7 @@
             height: 'auto',
             id: 'settings-panel',
             name: 'settings-panel',
-            scrollable: true,
+            scrollable: false,
           },
         );
       },
