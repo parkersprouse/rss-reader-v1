@@ -8,7 +8,10 @@
         <i class='fas fa-cog'></i>
       </button>
       &nbsp;<span class='separator-vertical'>|</span>&nbsp;
-      <!-- This is intentionally ugly: https://css-tricks.com/fighting-the-space-between-inline-block-elements/ -->
+      <!--
+        This is intentionally ugly: https://css-tricks.com/fighting-the-space-between-inline-block-elements/
+        This is the easiest solution and I'm lazy.
+      -->
       <button @click='minimizeWindow'><i class='el-icon-minus'></i></button><button @click='maximizeWindow'><i class='el-icon-plus'></i></button><button @click='closeWindow' class='titlebar-close'><i class='el-icon-close'></i></button>
     </div>
   </div>
@@ -25,6 +28,16 @@
         settings_panel_open: false,
       };
     },
+    mounted() {
+      const window = remote.getCurrentWindow();
+
+      window.on('unmaximize', () => {
+        console.log('unmaximize');
+      });
+      window.on('maximize', () => {
+        console.log('maximize');
+      });
+    },
     methods: {
       closeWindow() {
         const window = remote.getCurrentWindow();
@@ -32,10 +45,10 @@
       },
       maximizeWindow() {
         const window = remote.getCurrentWindow();
-        if (!window.isMaximized()) {
-          window.maximize();
-        } else {
+        if (window.isMaximized()) {
           window.unmaximize();
+        } else {
+          window.maximize();
         }
       },
       minimizeWindow() {
