@@ -12,7 +12,7 @@
         This is intentionally ugly: https://css-tricks.com/fighting-the-space-between-inline-block-elements/
         This is the easiest solution and I'm lazy.
       -->
-      <button @click='minimizeWindow'><i class='el-icon-minus'></i></button><button @click='maximizeWindow'><i class='el-icon-plus'></i></button><button @click='closeWindow' class='titlebar-close'><i class='el-icon-close'></i></button>
+      <button @click='minimizeWindow'><i class='fas fa-minus'></i></button><button @click='maximizeWindow'><i class='fas fa-clone' v-if='is_maximized'></i><i class='fas fa-square' v-else></i></button><button @click='closeWindow' class='titlebar-close'><i class='fas fa-times'></i></button>
     </div>
   </div>
 </template>
@@ -21,30 +21,29 @@
   import { remote } from 'electron';
   import SettingsPanel from '@/components/SettingsPanel';
 
+  const window = remote.getCurrentWindow();
+
   export default {
     name: 'titlebar',
     data() {
       return {
+        is_maximized: false,
         settings_panel_open: false,
       };
     },
     mounted() {
-      const window = remote.getCurrentWindow();
-
       window.on('unmaximize', () => {
-        console.log('unmaximize');
+        this.is_maximized = false;
       });
       window.on('maximize', () => {
-        console.log('maximize');
+        this.is_maximized = true;
       });
     },
     methods: {
       closeWindow() {
-        const window = remote.getCurrentWindow();
         window.close();
       },
       maximizeWindow() {
-        const window = remote.getCurrentWindow();
         if (window.isMaximized()) {
           window.unmaximize();
         } else {
@@ -52,7 +51,6 @@
         }
       },
       minimizeWindow() {
-        const window = remote.getCurrentWindow();
         window.minimize();
       },
       openSettingsPanel() {
