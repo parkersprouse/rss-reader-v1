@@ -58,7 +58,7 @@
           customClass: 'el-message--success',
           duration: 1500,
           iconClass: 'el-icon-check',
-          message: 'Settings Saved',
+          message: 'Feeds Refreshed',
           type: 'success',
         });
 

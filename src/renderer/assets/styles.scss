@@ -59,6 +59,10 @@ $scrollbar-handle-inactive-background-color: rgba(50, 50, 50, 0.4);
 // -----------------------------------------------------------------------------
 /*#region General Settings */
 
+* {
+  -webkit-user-select: none;
+}
+
 html,
 body {
   background-color: $app-bg-color;
@@ -140,6 +144,10 @@ body {
   }
 }
 
+.fullwidth {
+  width: 100%;
+}
+
 /*#endregion */
 
 
@@ -155,7 +163,6 @@ body {
   height: $titlebar-height;
   justify-content: space-between;
   -webkit-app-region: drag;
-  -webkit-user-select: none;
 
   #titlebar-left {
     font-weight: bold;
@@ -174,9 +181,8 @@ body {
       padding: 0;
       width: $titlebar-height;
 
-      i {
+      .fas, .far {
         color: white;
-        font-weight: bold;
       }
 
       &:hover {
@@ -229,7 +235,6 @@ body {
   overflow-y: auto;
   padding: 1rem;
   -webkit-overflow-scrolling: touch;
-  -webkit-user-select: none;
 }
 
 #settings-panel {
@@ -240,7 +245,6 @@ body {
     box-shadow: $settings-modal-box-shadow;
     color: $settings-modal-font-color;
     cursor: default;
-    -webkit-user-select: none;
 
     .el-form-item__label {
       color: $settings-modal-font-color;
@@ -288,7 +292,6 @@ body {
     box-shadow: $settings-modal-box-shadow;
     color: $settings-modal-font-color;
     cursor: default;
-    -webkit-user-select: none;
 
     > div {
       height: 100%;
@@ -420,7 +423,6 @@ body {
   max-width: 85%;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-user-select: none;
   white-space: nowrap;
 }
 

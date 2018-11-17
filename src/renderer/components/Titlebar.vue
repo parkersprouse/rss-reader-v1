@@ -5,14 +5,14 @@
     </div>
     <div id='titlebar-right'>
       <button @click='openSettingsPanel'>
-        <i class='fas fa-cog'></i>
+        <span class='fas fa-cog'></span>
       </button>
       &nbsp;<span class='separator-vertical'>|</span>&nbsp;
       <!--
         This is intentionally ugly: https://css-tricks.com/fighting-the-space-between-inline-block-elements/
         This is the easiest solution and I'm lazy.
       -->
-      <button @click='minimizeWindow'><i class='fas fa-minus'></i></button><button @click='maximizeWindow'><i class='fas fa-clone' v-if='is_maximized'></i><i class='fas fa-square' v-else></i></button><button @click='closeWindow' class='titlebar-close'><i class='fas fa-times'></i></button>
+      <button @click='minimizeWindow'><span class='fas fa-minus'></span></button><button @click='maximizeWindow'><span class='far fa-clone' v-if='is_maximized'></span><span class='far fa-square' v-else></span></button><button @click='closeWindow' class='titlebar-close'><span class='fas fa-times'></span></button>
     </div>
   </div>
 </template>
