@@ -60,6 +60,7 @@ $scrollbar-handle-inactive-background-color: rgba(50, 50, 50, 0.4);
 /*#region General Settings */
 
 * {
+  outline: none;
   -webkit-user-select: none;
 }
 
@@ -141,6 +142,13 @@ body {
     background-color: $button-dark-background-color-hover;
     border-color: $button-dark-background-color-hover;
     color: $button-dark-font-color-hover;
+  }
+}
+
+.el-button {
+  
+  .far, .fas {
+    margin-right: 5px;
   }
 }
 
@@ -420,7 +428,7 @@ body {
 .feed-card-title {
   cursor: default;
   display: inline-block;
-  max-width: 85%;
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

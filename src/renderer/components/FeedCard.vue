@@ -1,45 +1,48 @@
 <template>
-  <el-card class='box-card feed-card' v-if='error'>
-    <div slot='header' class='feed-header'>
-      <span>&nbsp;</span>
-      <el-button icon='el-icon-close'
-                 style='float: right; padding: 3px'
-                 type='danger'
-                 @click='deleteFeed'></el-button>
-    </div>
-    <div class='feed-body'>
-      <div style='margin-bottom: 2rem;'>
-        {{ error }}
+  <div>
+    <el-card class='box-card feed-card' v-if='error'>
+      <div slot='header' class='feed-header' @contextmenu.prevent.stop='$refs.feed_header_menu.open'>
+        <div class='feed-card-title'>Error</div>
       </div>
-    </div>
-  </el-card>
-  <el-card class='box-card feed-card' v-else-if='feed'>
-    <div slot='header' class='feed-header'>
-      <div class='feed-card-title' :title='feed.title'>{{ feed.title }}</div>
-      <el-button icon='el-icon-close'
-                 style='float: right; padding: 3px'
-                 type='danger'
-                 @click='deleteFeed'></el-button>
-    </div>
-    <div class='feed-body'>
-      <div v-for='i in feed.items' :key='i.created'>
-        <a @click='showDetails(i)' @contextmenu.prevent='visit(i.link)' href='#'>
-          <img v-if='i.enclosures && i.enclosures.length > 0 && isImage(i.enclosures[0].url)' :src='i.enclosures[0].url' />
-          <div id='feed-title'>{{ i.title }}</div>
-          <div id='feed-date'>{{ formatDate(i.pubdate) }}</div>
-        </a>
+      <div class='feed-body'>
+        <div style='margin-bottom: 2rem;'>
+          <div style='font-weight: bold; margin-bottom: 1rem;'>Unable to parse feed</div>
+          <div>{{ error }}</div>
+        </div>
       </div>
-    </div>
-  </el-card>
-  <el-card class='box-card feed-card' v-else>
-    <div v-loading='true'></div>
-  </el-card>
+    </el-card>
+    <el-card class='box-card feed-card' v-else-if='feed'>
+      <div slot='header' class='feed-header' @contextmenu.prevent.stop='$refs.feed_header_menu.open'>
+        <div class='feed-card-title' :title='feed.title'>{{ feed.title }}</div>
+      </div>
+      <div class='feed-body'>
+        <div v-for='i in feed.items' :key='i.created'>
+          <a @click='showDetails(i)' @contextmenu.prevent.stop='visit(i.link)' href='#'>
+            <img v-if='i.enclosures && i.enclosures.length > 0 && isImage(i.enclosures[0].url)' :src='i.enclosures[0].url' />
+            <div id='feed-title'>{{ i.title }}</div>
+            <div id='feed-date'>{{ formatDate(i.pubdate) }}</div>
+          </a>
+        </div>
+      </div>
+    </el-card>
+    <el-card class='box-card feed-card' v-else>
+      <div v-loading='true'></div>
+    </el-card>
+
+    <vue-context ref='feed_header_menu'>
+      <ul>
+        <li @click="handleContextClick('hide')">Hide Feed Entries</li>
+        <li @click="handleContextClick('delete')">Delete Feed</li>
+      </ul>
+    </vue-context>
+  </div>
 </template>
 
 <script>
   import { shell } from 'electron';
   import _ from 'lodash';
   import moment from 'moment';
+  import { VueContext } from 'vue-context';
   import db from '@/lib/db';
   import parse from '@/lib/feedparser/feedparser-promised';
   import utils from '@/lib/utils';
@@ -47,6 +50,9 @@
 
   export default {
     name: 'main-container',
+    components: {
+      'vue-context': VueContext,
+    },
     props: {
       src: {
         type: String,
@@ -73,15 +79,19 @@
       formatDate(date) {
         return moment(date).format('MM/DD/YYYY');
       },
+      handleContextClick(option) {
+        if (option === 'delete') this.deleteFeed();
+        else if (option === 'hide') console.log('hidden');
+      },
       refreshFeed() {
         parse(this.src)
           .then((feed) => {
             const new_feed = { ...feed };
             new_feed.items = _.sortBy(feed.items, ['pubdate']).reverse();
-            this.feed = new_feed;
+            this.feed = feed;
           })
-          .catch(() => {
-            this.error = 'Unable to parse feed';
+          .catch((err) => {
+            this.error = err.message;
           });
       },
       showDetails(article) {

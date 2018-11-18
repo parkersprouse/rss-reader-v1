@@ -2,14 +2,14 @@
   <div class='sidebar-inner'>
     <div>
       <el-input placeholder='Feed URL' v-model='new_feed' style='margin-bottom: 0.5rem;'></el-input>
-      <el-button @click='submitNewFeed' icon='el-icon-circle-plus-outline' class='fullwidth' type='dark'>
-        Add
+      <el-button @click='submitNewFeed' class='fullwidth' type='dark'>
+        <span class='fas fa-plus'></span> Add
       </el-button>
     </div>
     <hr class='separator-horizonal' />
     <div>
-      <el-button @click='refreshFeeds' icon='el-icon-refresh' class='fullwidth' type='dark'>
-        Refresh Feeds
+      <el-button @click='refreshFeeds' class='fullwidth' type='dark'>
+        <span class='fas fa-sync-alt'></span> Refresh Feeds
       </el-button>
     </div>
   </div>
