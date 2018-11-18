@@ -1,7 +1,7 @@
-const lowdb = require('lowdb');
+const { app } = require('electron').remote;
 const FileSync = require('lowdb/adapters/FileSync');
-const adapter = new FileSync('db.json');
-const db = lowdb(adapter);
+const adapter = new FileSync(require('path').join(app.getPath('userData'), 'db.json'));
+const db = require('lowdb')(adapter);
 
 if (!db.has('feeds').value()) {
   db.defaults({ feeds: [] }).write();

@@ -1,11 +1,13 @@
-import { app, BrowserWindow } from 'electron' // eslint-disable-line
+/* eslint-disable */
+
+import { app, BrowserWindow, Menu } from 'electron'
 
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
 if (process.env.NODE_ENV !== 'development') {
-  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\') // eslint-disable-line
+  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
 let mainWindow;
@@ -23,7 +25,7 @@ function createWindow() {
     height: 563,
     minHeight: 500,
     minWidth: 500,
-    // show: false,
+    // show: false, // pairs with the "prevent pop-in" below
     title: 'RSS Feed Reader',
     // titleBarStyle: process.platform === 'darwin' ? 'hidden' : 'default',
     useContentSize: true,
@@ -45,7 +47,50 @@ function createWindow() {
   // });
 }
 
-app.on('ready', createWindow);
+function generateMenu() {
+  const template = [
+    {
+      label: 'View',
+      submenu: [
+        {role: 'reload'},
+        {role: 'forcereload'},
+        {role: 'toggledevtools'},
+        {type: 'separator'},
+        {role: 'resetzoom'},
+        {role: 'zoomin'},
+        {role: 'zoomout'},
+        {type: 'separator'},
+        {role: 'togglefullscreen'}
+      ]
+    },
+  ]
+
+  template.unshift({
+    label: app.getName(),
+    submenu: [
+      {role: 'about'},
+      {type: 'separator'},
+      {role: 'services', submenu: []},
+      {type: 'separator'},
+      {role: 'hide'},
+      {role: 'hideothers'},
+      {role: 'unhide'},
+      {type: 'separator'},
+      {role: 'quit'}
+    ]
+  })
+  
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
+}
+
+app.on('ready', () => {
+  // in case we want to allow a mac menu, allow here
+  // if (process.platform === 'darwin') {
+  //   generateMenu();
+  // }
+  createWindow();
+});
 
 app.on('window-all-closed', () => {
   /**
