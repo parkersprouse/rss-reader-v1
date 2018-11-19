@@ -31,8 +31,8 @@
 
     <vue-context ref='feed_header_menu'>
       <ul>
-        <li @click="handleContextClick('hide')">Hide Feed Entries</li>
-        <li @click="handleContextClick('delete')">Delete Feed</li>
+        <li @click='showConfirmDelete'>Hide Feed Entries</li>
+        <li @click='showConfirmDelete'>Delete Feed</li>
       </ul>
     </vue-context>
   </div>
@@ -79,10 +79,6 @@
       formatDate(date) {
         return moment(date).format('MM/DD/YYYY');
       },
-      handleContextClick(option) {
-        if (option === 'delete') this.deleteFeed();
-        else if (option === 'hide') console.log('hidden');
-      },
       refreshFeed() {
         parse(this.src)
           .then((feed) => {
@@ -93,6 +89,28 @@
           .catch((err) => {
             this.error = err.message;
           });
+      },
+      showConfirmDelete() {
+        this.$modal.show({
+          template: `
+            <div>
+              <h2>Are you sure you want to delete the<br/>"{{ feedName }}" feed?</h2>
+              <div class='btn-container'>
+                <el-button @click='() => { this.deleteFeed(); $emit("close"); }' type='danger'>Yes</el-button>
+                <el-button @click='$emit("close")' type='dark'>No</el-button>
+              </div>
+            </div>
+          `,
+          props: ['deleteFeed', 'feedName'],
+        },
+        { deleteFeed: this.deleteFeed, feedName: this.feed.title },
+        {
+          clickToClose: true,
+          height: 'auto',
+          id: 'confirm-delete-feed-dialog',
+          name: 'confirm-delete-feed-dialog',
+          scrollable: false,
+        });
       },
       showDetails(article) {
         this.$modal.show(

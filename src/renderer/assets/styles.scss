@@ -245,6 +245,30 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+#confirm-delete-feed-dialog {
+
+  .v--modal-box.v--modal {
+    background-color: $settings-modal-background-color;
+    border: $settings-modal-border;
+    box-shadow: $settings-modal-box-shadow;
+    color: $settings-modal-font-color;
+    cursor: default;
+    text-align: center;
+  }
+
+  .btn-container {
+    // border-top: 1px solid black;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding-top: 1rem;
+    text-align: center;
+  }
+
+  h2 {
+    margin-top: 0;
+  }
+}
+
 #settings-panel {
 
   .v--modal-box.v--modal {
@@ -366,6 +390,16 @@ body {
         }
       }
     }
+  }
+}
+
+.v-context {
+  background-color: #2F3136 !important;
+  border: 1px solid black !important;
+  color: #dddddd !important;
+
+  li:hover {
+    background-color: $main-background-color !important;
   }
 }
 
