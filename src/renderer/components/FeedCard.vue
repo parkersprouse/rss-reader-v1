@@ -20,7 +20,7 @@
           <a @click='showDetails(i)' @contextmenu.prevent.stop='visit(i.link)' href='#'>
             <img v-if='i.enclosures && i.enclosures.length > 0 && isImage(i.enclosures[0].url)' :src='i.enclosures[0].url' />
             <div id='feed-title'>{{ i.title }}</div>
-            <div id='feed-date'>{{ formatDate(i.pubdate) }}</div>
+            <div id='feed-date' v-html='formatDate(i.pubdate)'></div>
           </a>
         </div>
       </div>
@@ -77,7 +77,8 @@
         this.$root.$emit('feedDeleted');
       },
       formatDate(date) {
-        return moment(date).format('MM/DD/YYYY');
+        const parsed_date = moment(date);
+        return `${parsed_date.format('MM/DD/YYYY')} &sdot; ${parsed_date.format('hh:mm a')}`;
       },
       refreshFeed() {
         parse(this.src)
