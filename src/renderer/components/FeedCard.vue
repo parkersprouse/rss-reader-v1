@@ -15,7 +15,7 @@
       <div slot='header' class='feed-header' @contextmenu.prevent.stop='$refs.feed_header_menu.open'>
         <div class='feed-card-title' :title='feed.title'>{{ feed.title }}</div>
       </div>
-      <div class='feed-body'>
+      <div class='feed-body' v-blur='blur'>
         <div v-for='i in feed.items' :key='i.created'>
           <a @click='showDetails(i)' @contextmenu.prevent.stop='visit(i.link)' href='#'>
             <img v-if='i.enclosures && i.enclosures.length > 0 && isImage(i.enclosures[0].url)' :src='i.enclosures[0].url' />
@@ -31,7 +31,7 @@
 
     <vue-context ref='feed_header_menu'>
       <ul>
-        <li @click='showConfirmDelete'>Hide Feed Entries</li>
+        <li @click='toggleBlur'>{{ this.blur.isBlurred ? 'Show' : 'Hide' }} Feed Entries</li>
         <li @click='showConfirmDelete'>Delete Feed</li>
       </ul>
     </vue-context>
@@ -61,6 +61,12 @@
     },
     data() {
       return {
+        blur: {
+          filter: 'blur(10px)',
+          isBlurred: false,
+          opacity: 0.5,
+          transition: 'all .3s linear',
+        },
         error: null,
         feed: null,
       };
@@ -78,6 +84,9 @@
       },
       formatDate(date) {
         const parsed_date = moment(date);
+        if (!parsed_date.isValid()) {
+          return 'No Date';
+        }
         return `${parsed_date.format('MM/DD/YYYY')} &sdot; ${parsed_date.format('hh:mm a')}`;
       },
       refreshFeed() {
@@ -125,6 +134,10 @@
             width: '75%',
           },
         );
+      },
+      toggleBlur() {
+        this.blur.isBlurred = !this.blur.isBlurred;
+        this.$forceUpdate();
       },
       visit(link) {
         shell.openExternal(link);
