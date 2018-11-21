@@ -4,7 +4,7 @@
       <div slot='header' class='feed-header' @contextmenu.prevent.stop='$refs.feed_header_menu.open'>
         <div class='feed-card-title'>Error</div>
       </div>
-      <div class='feed-body'>
+      <div :class='["feed-body", feed_height]'>
         <div style='margin-bottom: 2rem;'>
           <div style='font-weight: bold; margin-bottom: 1rem;'>Unable to parse feed</div>
           <div>{{ error }}</div>
@@ -15,7 +15,7 @@
       <div slot='header' class='feed-header' @contextmenu.prevent.stop='$refs.feed_header_menu.open'>
         <div class='feed-card-title' :title='feed.title'>{{ feed.title }}</div>
       </div>
-      <div class='feed-body' v-blur='blur'>
+      <div :class='["feed-body", feed_height]' v-blur='blur'>
         <div v-for='i in feed.items' :key='i.created'>
           <a @click='showDetails(i)' @contextmenu.prevent.stop='visit(i.link)' href='#'>
             <img v-if='i.enclosures && i.enclosures.length > 0 && isImage(i.enclosures[0].url)' :src='i.enclosures[0].url' />
@@ -69,11 +69,15 @@
         },
         error: null,
         feed: null,
+        feed_height: db.get('settings').value().feed_height || 'feed-lg',
       };
     },
     mounted() {
       this.refreshFeed();
       this.$root.$on('feedsRefreshed', this.refreshFeed);
+      this.$root.$on('feedHeightChanged', () => {
+        this.feed_height = db.get('settings').value().feed_height;
+      });
     },
     methods: {
       isImage: utils.isImage,

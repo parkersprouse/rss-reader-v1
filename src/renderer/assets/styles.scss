@@ -428,10 +428,25 @@ body {
 }
 
 .feed-body {
-  height: 400px;
   overflow-x: hidden;
   overflow-y: auto;
   padding-right: 5px;
+
+  &.feed-sm {
+    height: 200px;
+  }
+
+  &.feed-md {
+    height: 350px;
+  }
+
+  &.feed-lg {
+    height: 500px;
+  }
+
+  &.feed-xl {
+    height: 650px;
+  }
 
   > div {
     margin-bottom: 1rem;
