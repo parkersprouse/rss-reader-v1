@@ -54,6 +54,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "electron-util": "^0.9.1",
+    "electron-window-state": "^5.0.2",
     "element-ui": "^2.4.8",
     "feedparser": "^2.2.9",
     "lodash": "^4.17.11",

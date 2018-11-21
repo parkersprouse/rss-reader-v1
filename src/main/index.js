@@ -1,6 +1,7 @@
 /* eslint-disable */
 
-import { app, BrowserWindow, Menu } from 'electron'
+import { app, BrowserWindow, Menu } from 'electron';
+import windowStateKeeper from 'electron-window-state';
 
 /**
  * Set `__static` path to static files in production
@@ -19,17 +20,25 @@ function createWindow() {
   /**
    * Initial window options
    */
+
+  const mainWindowState = windowStateKeeper({
+    defaultWidth: 1000,
+    defaultHeight: 563,
+    file: 'win.json'
+  });
+
   mainWindow = new BrowserWindow({
     backgroundColor: 'rgb(63, 65, 71)',
     frame: false, // process.platform === 'darwin',
-    height: 563,
+    height: mainWindowState.height,
     minHeight: 500,
     minWidth: 500,
-    // show: false, // pairs with the "prevent pop-in" below
     title: 'RSS Feed Reader',
     // titleBarStyle: process.platform === 'darwin' ? 'hidden' : 'default',
-    useContentSize: true,
-    width: 1000,
+    useContentSize: false,
+    width: mainWindowState.width,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
   });
 
   mainWindow.loadURL(winURL);
@@ -38,13 +47,7 @@ function createWindow() {
     mainWindow = null;
   });
 
-  /**
-   * Prevent "pop-in" from happening by making sure the window
-   * isn't shown until the content within is loaded.
-   */
-  // mainWindow.once('ready-to-show', () => {
-  //   mainWindow.show();
-  // });
+  mainWindowState.manage(mainWindow);
 }
 
 function generateMenu() {

@@ -27,7 +27,7 @@
     name: 'titlebar',
     data() {
       return {
-        is_maximized: false,
+        is_maximized: window.isMaximized(),
         settings_panel_open: false,
       };
     },

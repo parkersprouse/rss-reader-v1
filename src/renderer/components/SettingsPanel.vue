@@ -9,7 +9,7 @@
         <span style='margin-left: 0.5rem;'>minutes</span>
       </el-form-item>
       <el-form-item label='Feed Card Height'>
-        <el-select v-model='settings.feed_height' placeholder='Height'>
+        <el-select v-model='settings.feed_height'>
           <el-option
             v-for='item in [{ v: "feed-sm", l: "Small" }, { v: "feed-md", l: "Medium" }, { v: "feed-lg", l: "Large" }, { v: "feed-xl", l: "Extra Large" }]'
             :key='item.v'
