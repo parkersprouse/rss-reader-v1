@@ -18,6 +18,10 @@ $message-success-font-color: #155724;
 
 $input-background-color: #484B51;
 $input-font-color: #dddddd;
+$select-background-color: transparent;
+$select-item-background-color-hover: #202225;
+$number-input-button-background-color: #202225;
+$number-input-button-background-color-hover: #18191b;
 
 $button-dark-background-color: #2F3136; // #202225;
 $button-dark-background-color-hover: #18191b;
@@ -26,16 +30,17 @@ $button-dark-font-color-hover: #dddddd;
 
 $titlebar-background-color: #202225;
 $titlebar-font-color: #dddddd;
+$titlebar-button-background-color: #202225;
+$titlebar-button-font-color: white;
+$titlebar-button-background-color-hover: rgb(71, 71, 71);
+$titlebar-close-button-background-color-hover: red;
 
 $sidebar-background-color: #2F3136;
 $sidebar-font-color: #dddddd;
 
 $main-background-color: rgb(63, 65, 71); // #36393F;
 
-$settings-modal-background-color: #2F3136;
-$settings-modal-border: 1px solid black;
-$settings-modal-box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.6);
-$settings-modal-font-color: #dddddd;
+$no-feeds-font-color: #202225;
 
 $feed-card-background-color: transparent;
 $feed-card-border: 1px solid black;
@@ -46,6 +51,24 @@ $feed-card-body-background-color: #36393F; // rgb(63, 65, 71);
 $feed-card-body-font-color: #eeeeee;
 $feed-card-link-border: 1px dashed #eeeeee;
 $feed-card-link-color: #eeeeee;
+$feed-card-date-font-color: #808080;
+
+$context-menu-background-color: #2F3136;
+$context-menu-border: 1px solid black;
+$context-menu-font-color: #dddddd;
+
+$settings-modal-background-color: #2F3136;
+$settings-modal-border: 1px solid black;
+$settings-modal-box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.6);
+$settings-modal-font-color: #dddddd;
+$settings-modal-buttons-container-border: 1px solid black;
+
+$article-modal-date-font-color: #808080;
+$article-modal-content-border: 1px solid #808080;
+$article-modal-blockquote-border: 10px solid #808080;
+$article-modal-table-border: 1px solid #808080;
+$article-modal-table-cell-border: 1px solid #808080;
+$article-modal-content-link-font-color: #ffffff;
 
 $scrollbar-track-background-color: rgba(47, 49, 54, 0.5);
 $scrollbar-track-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -119,7 +142,7 @@ body {
   justify-content: center;
 
   > span {
-    color: #202225;
+    color: $no-feeds-font-color;
     cursor: default;
     font-size: 3em;
     font-weight: bold;
@@ -155,7 +178,7 @@ body {
 .el-select-dropdown {
   border: none;
   border-radius: 4px;
-  background-color: transparent;
+  background-color: $select-background-color;
 
   .el-select-dropdown__wrap {
     background-color: $input-background-color;
@@ -164,7 +187,7 @@ body {
       color: $input-font-color;
   
       &.hover, &:hover {
-        background-color: #202225;
+        background-color: $select-item-background-color-hover;
       }
     }
   }
@@ -180,6 +203,17 @@ body {
       border: none;
     }
   }
+
+  // Fix for the scrollbar showing up for whatever reason
+  ::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    box-shadow: none;
+  }
+  // End fix for the scrollbar showing up for whatever reason
 }
 
 .fullwidth {
@@ -211,7 +245,7 @@ body {
     -webkit-app-region: no-drag;
 
     button {
-      background-color: #202225;
+      background-color: $titlebar-button-background-color;
       border: none;
       height: $titlebar-height;
       margin: 0;
@@ -220,15 +254,15 @@ body {
       width: $titlebar-height;
 
       .fas, .far {
-        color: white;
+        color: $titlebar-button-font-color;
       }
 
       &:hover {
-        background-color: rgb(71, 71, 71);
+        background-color: $titlebar-button-background-color-hover;
       }
 
       &.titlebar-close:hover {
-        background-color: red;
+        background-color: $titlebar-close-button-background-color-hover;
       }
     }
   }
@@ -314,14 +348,14 @@ body {
 
     .el-input-number__increase,
     .el-input-number__decrease {
-      background-color: #202225;
+      background-color: $number-input-button-background-color;
       border: none;
       bottom: 0;
       color: $settings-modal-font-color;
       top: 0;
 
       &:hover {
-        background-color: #18191b;
+        background-color: $number-input-button-background-color-hover;
       }
 
       i {
@@ -338,7 +372,7 @@ body {
     }
 
     .settings-panel-btns {
-      border-top: 1px solid black;
+      border-top: $settings-modal-buttons-container-border;
       margin-left: -1rem;
       margin-right: -1rem;
       padding-top: 1rem;
@@ -371,14 +405,14 @@ body {
       }
 
       #article-date {
-        color: #808080;
+        color: $article-modal-date-font-color;
         margin-bottom: 1rem;
         text-align: center;
       }
 
       #article-description,
       #article-summary {
-        border-top: 1px solid #808080;
+        border-top: $article-modal-content-border;
         padding-bottom: 1rem;
         padding-top: 1rem;
 
@@ -388,14 +422,14 @@ body {
         }
 
         blockquote {
-          border-left: 10px solid #808080;
+          border-left: $article-modal-blockquote-border;
           padding-left: 1rem;
         }
   
         table {
           width: 100%;
           border-collapse: collapse;
-          border: 1px solid #808080;
+          border: $article-modal-table-border;
   
           th {
             font-weight: bold;
@@ -403,7 +437,7 @@ body {
           }
   
           th, td {
-            border: 1px solid #808080;
+            border: $article-modal-table-cell-border;
             padding: 0.5rem;
           }
         }
@@ -416,7 +450,7 @@ body {
         }
   
         a {
-          color: #ffffff;
+          color: $article-modal-content-link-font-color;
         }
       }
     }
@@ -424,9 +458,9 @@ body {
 }
 
 .v-context {
-  background-color: #2F3136 !important;
-  border: 1px solid black !important;
-  color: #dddddd !important;
+  background-color: $context-menu-background-color !important;
+  border: $context-menu-border !important;
+  color: $context-menu-font-color !important;
 
   li:hover {
     background-color: $main-background-color !important;
@@ -496,7 +530,7 @@ body {
       }
 
       #feed-date {
-        color: #808080;
+        color: $feed-card-date-font-color;
         font-size: 13px;
         margin-top: 0.5rem;
       }
