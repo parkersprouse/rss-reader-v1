@@ -12,7 +12,10 @@
         This is intentionally ugly: https://css-tricks.com/fighting-the-space-between-inline-block-elements/
         This is the easiest solution and I'm lazy.
       -->
-      <button @click='minimizeWindow'><span class='fas fa-minus'></span></button><button @click='maximizeWindow'><span class='far fa-clone' v-if='is_maximized'></span><span class='far fa-square' v-else></span></button><button @click='closeWindow' class='titlebar-close'><span class='fas fa-times'></span></button>
+      <button @click='minimizeWindow'><span class='fas fa-minus'></span>
+      </button><button @click='maximizeWindow'><span class='far fa-clone' v-if='is_maximized'></span><span class='far fa-square' v-else></span>
+      </button><button @click='closeWindow' class='titlebar-close'><span class='fas fa-times'></span>
+      </button>
     </div>
   </div>
 </template>
@@ -27,7 +30,7 @@
     name: 'titlebar',
     data() {
       return {
-        is_maximized: false,
+        is_maximized: window.isMaximized(),
         settings_panel_open: false,
       };
     },

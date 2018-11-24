@@ -4,11 +4,11 @@
     <div id='article-date' v-if='article.pubdate' v-html='pubdate'></div>
     <div id='article-summary' v-if='article.summary'>
       <h3>Summary</h3>
-      <div v-html='summary' ref='article_summary'></div>
+      <div v-html='purge(article.summary)' ref='article_summary'></div>
     </div>
     <div id='article-description' v-if='article.description'>
       <h3>Detailed</h3>
-      <div v-html='description' ref='article_description'></div>
+      <div v-html='purge(article.description)' ref='article_description'></div>
     </div>
   </div>
 </template>
@@ -45,30 +45,22 @@
         event.preventDefault();
         this.visit(event.target.href || event.target.parentElement.href);
       },
+      purge(text) {
+        return text
+          .replace(class_regex, '')
+          .replace(id_regex, '')
+          .replace(style_regex, '')
+          .replace(width_regex, '')
+          .replace(height_regex, '');
+      },
       visit(link) {
         shell.openExternal(link);
       },
     },
     computed: {
-      description() {
-        return this.article.description
-          .replace(class_regex, '')
-          .replace(id_regex, '')
-          .replace(style_regex, '')
-          .replace(width_regex, '')
-          .replace(height_regex, '');
-      },
       pubdate() {
         const parsed_date = moment(this.article.pubdate);
         return `${parsed_date.format('hh:mm a')} &sdot; ${parsed_date.format('dddd, MMMM Do YYYY')}`;
-      },
-      summary() {
-        return this.article.summary
-          .replace(class_regex, '')
-          .replace(id_regex, '')
-          .replace(style_regex, '')
-          .replace(width_regex, '')
-          .replace(height_regex, '');
       },
     },
   };

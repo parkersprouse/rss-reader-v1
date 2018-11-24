@@ -1,11 +1,14 @@
-import { app, BrowserWindow } from 'electron' // eslint-disable-line
+/* eslint-disable */
+
+import { app, BrowserWindow, Menu } from 'electron';
+import windowStateKeeper from 'electron-window-state';
 
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
 if (process.env.NODE_ENV !== 'development') {
-  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\') // eslint-disable-line
+  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
 let mainWindow;
@@ -17,17 +20,25 @@ function createWindow() {
   /**
    * Initial window options
    */
+
+  const mainWindowState = windowStateKeeper({
+    defaultWidth: 1000,
+    defaultHeight: 563,
+    file: 'win.json'
+  });
+
   mainWindow = new BrowserWindow({
     backgroundColor: 'rgb(63, 65, 71)',
     frame: false, // process.platform === 'darwin',
-    height: 563,
+    height: mainWindowState.height,
     minHeight: 500,
     minWidth: 500,
-    // show: false,
     title: 'RSS Feed Reader',
     // titleBarStyle: process.platform === 'darwin' ? 'hidden' : 'default',
-    useContentSize: true,
-    width: 1000,
+    useContentSize: false,
+    width: mainWindowState.width,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
   });
 
   mainWindow.loadURL(winURL);
@@ -36,16 +47,53 @@ function createWindow() {
     mainWindow = null;
   });
 
-  /**
-   * Prevent "pop-in" from happening by making sure the window
-   * isn't shown until the content within is loaded.
-   */
-  // mainWindow.once('ready-to-show', () => {
-  //   mainWindow.show();
-  // });
+  mainWindowState.manage(mainWindow);
 }
 
-app.on('ready', createWindow);
+function generateMenu() {
+  const template = [
+    {
+      label: 'View',
+      submenu: [
+        {role: 'reload'},
+        {role: 'forcereload'},
+        {role: 'toggledevtools'},
+        {type: 'separator'},
+        {role: 'resetzoom'},
+        {role: 'zoomin'},
+        {role: 'zoomout'},
+        {type: 'separator'},
+        {role: 'togglefullscreen'}
+      ]
+    },
+  ]
+
+  template.unshift({
+    label: app.getName(),
+    submenu: [
+      {role: 'about'},
+      {type: 'separator'},
+      {role: 'services', submenu: []},
+      {type: 'separator'},
+      {role: 'hide'},
+      {role: 'hideothers'},
+      {role: 'unhide'},
+      {type: 'separator'},
+      {role: 'quit'}
+    ]
+  })
+  
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
+}
+
+app.on('ready', () => {
+  // in case we want to allow a mac menu, allow here
+  // if (process.platform === 'darwin') {
+  //   generateMenu();
+  // }
+  createWindow();
+});
 
 app.on('window-all-closed', () => {
   /**

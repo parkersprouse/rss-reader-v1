@@ -4,7 +4,7 @@
       <div slot='header' class='feed-header' @contextmenu.prevent.stop='$refs.feed_header_menu.open'>
         <div class='feed-card-title'>Error</div>
       </div>
-      <div class='feed-body'>
+      <div :class='["feed-body", feed_height]'>
         <div style='margin-bottom: 2rem;'>
           <div style='font-weight: bold; margin-bottom: 1rem;'>Unable to parse feed</div>
           <div>{{ error }}</div>
@@ -15,12 +15,12 @@
       <div slot='header' class='feed-header' @contextmenu.prevent.stop='$refs.feed_header_menu.open'>
         <div class='feed-card-title' :title='feed.title'>{{ feed.title }}</div>
       </div>
-      <div class='feed-body'>
+      <div :class='["feed-body", feed_height]' v-blur='blur'>
         <div v-for='i in feed.items' :key='i.created'>
           <a @click='showDetails(i)' @contextmenu.prevent.stop='visit(i.link)' href='#'>
             <img v-if='i.enclosures && i.enclosures.length > 0 && isImage(i.enclosures[0].url)' :src='i.enclosures[0].url' />
             <div id='feed-title'>{{ i.title }}</div>
-            <div id='feed-date'>{{ formatDate(i.pubdate) }}</div>
+            <div id='feed-date' v-html='formatDate(i.pubdate)'></div>
           </a>
         </div>
       </div>
@@ -31,8 +31,8 @@
 
     <vue-context ref='feed_header_menu'>
       <ul>
-        <li @click="handleContextClick('hide')">Hide Feed Entries</li>
-        <li @click="handleContextClick('delete')">Delete Feed</li>
+        <li @click='toggleBlur'>{{ this.blur.isBlurred ? 'Show' : 'Hide' }} Feed Entries</li>
+        <li @click='showConfirmDelete'>Delete Feed</li>
       </ul>
     </vue-context>
   </div>
@@ -61,13 +61,23 @@
     },
     data() {
       return {
+        blur: {
+          filter: 'blur(10px)',
+          isBlurred: false,
+          opacity: 0.5,
+          transition: 'all .3s linear',
+        },
         error: null,
         feed: null,
+        feed_height: db.get('settings').value().feed_height || 'feed-lg',
       };
     },
     mounted() {
       this.refreshFeed();
       this.$root.$on('feedsRefreshed', this.refreshFeed);
+      this.$root.$on('feedHeightChanged', () => {
+        this.feed_height = db.get('settings').value().feed_height;
+      });
     },
     methods: {
       isImage: utils.isImage,
@@ -77,11 +87,11 @@
         this.$root.$emit('feedDeleted');
       },
       formatDate(date) {
-        return moment(date).format('MM/DD/YYYY');
-      },
-      handleContextClick(option) {
-        if (option === 'delete') this.deleteFeed();
-        else if (option === 'hide') console.log('hidden');
+        const parsed_date = moment(date);
+        if (!parsed_date.isValid()) {
+          return 'No Date';
+        }
+        return `${parsed_date.format('MM/DD/YYYY')} &sdot; ${parsed_date.format('hh:mm a')}`;
       },
       refreshFeed() {
         parse(this.src)
@@ -93,6 +103,28 @@
           .catch((err) => {
             this.error = err.message;
           });
+      },
+      showConfirmDelete() {
+        this.$modal.show({
+          template: `
+            <div>
+              <h2>Are you sure you want to delete the<br/>"{{ feedName }}" feed?</h2>
+              <div class='btn-container'>
+                <el-button @click='() => { this.deleteFeed(); $emit("close"); }' type='danger'>Yes</el-button>
+                <el-button @click='$emit("close")' type='dark'>No</el-button>
+              </div>
+            </div>
+          `,
+          props: ['deleteFeed', 'feedName'],
+        },
+        { deleteFeed: this.deleteFeed, feedName: this.feed.title },
+        {
+          clickToClose: true,
+          height: 'auto',
+          id: 'confirm-delete-feed-dialog',
+          name: 'confirm-delete-feed-dialog',
+          scrollable: false,
+        });
       },
       showDetails(article) {
         this.$modal.show(
@@ -106,6 +138,10 @@
             width: '75%',
           },
         );
+      },
+      toggleBlur() {
+        this.blur.isBlurred = !this.blur.isBlurred;
+        this.$forceUpdate();
       },
       visit(link) {
         shell.openExternal(link);
