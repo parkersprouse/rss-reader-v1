@@ -8,7 +8,7 @@ import windowStateKeeper from 'electron-window-state';
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
 if (process.env.NODE_ENV !== 'development') {
-  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\');
 }
 
 let mainWindow;
@@ -17,28 +17,24 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`;
 
 function createWindow() {
-  /**
-   * Initial window options
-   */
-
-  const mainWindowState = windowStateKeeper({
-    defaultWidth: 1000,
+  const windowState = windowStateKeeper({
     defaultHeight: 563,
+    defaultWidth: 1000,
     file: 'win.json'
   });
 
   mainWindow = new BrowserWindow({
     backgroundColor: 'rgb(63, 65, 71)',
     frame: false, // process.platform === 'darwin',
-    height: mainWindowState.height,
+    height: windowState.height,
     minHeight: 500,
     minWidth: 500,
     title: 'RSS Feed Reader',
     // titleBarStyle: process.platform === 'darwin' ? 'hidden' : 'default',
     useContentSize: false,
-    width: mainWindowState.width,
-    x: mainWindowState.x,
-    y: mainWindowState.y,
+    width: windowState.width,
+    x: windowState.x,
+    y: windowState.y
   });
 
   mainWindow.loadURL(winURL);
@@ -47,44 +43,43 @@ function createWindow() {
     mainWindow = null;
   });
 
-  mainWindowState.manage(mainWindow);
+  windowState.manage(mainWindow);
 }
 
 function generateMenu() {
   const template = [
     {
-      label: 'View',
+      label: app.getName(),
       submenu: [
-        {role: 'reload'},
-        {role: 'forcereload'},
-        {role: 'toggledevtools'},
-        {type: 'separator'},
-        {role: 'resetzoom'},
-        {role: 'zoomin'},
-        {role: 'zoomout'},
-        {type: 'separator'},
-        {role: 'togglefullscreen'}
+        { role: 'about' },
+        { type: 'separator' },
+        { role: 'services', submenu: [] },
+        { type: 'separator' },
+        { role: 'hide' },
+        { role: 'hideothers' },
+        { role: 'unhide' },
+        { type: 'separator' },
+        { role: 'quit' }
       ]
     },
-  ]
+    {
+      label: 'View',
+      submenu: [
+        { role: 'reload' },
+        { role: 'forcereload' },
+        { role: 'toggledevtools' },
+        { type: 'separator' },
+        { role: 'resetzoom' },
+        { role: 'zoomin' },
+        { role: 'zoomout' },
+        { type: 'separator' },
+        { role: 'togglefullscreen' }
+      ]
+    }
+  ];
 
-  template.unshift({
-    label: app.getName(),
-    submenu: [
-      {role: 'about'},
-      {type: 'separator'},
-      {role: 'services', submenu: []},
-      {type: 'separator'},
-      {role: 'hide'},
-      {role: 'hideothers'},
-      {role: 'unhide'},
-      {type: 'separator'},
-      {role: 'quit'}
-    ]
-  })
-  
-  const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 }
 
 app.on('ready', () => {
@@ -130,4 +125,4 @@ autoUpdater.on('update-downloaded', () => {
 app.on('ready', () => {
   if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
 })
- */
+*/

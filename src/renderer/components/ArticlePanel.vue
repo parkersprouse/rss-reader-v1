@@ -4,11 +4,11 @@
     <div id='article-date' v-if='article.pubdate' v-html='pubdate'></div>
     <div id='article-summary' v-if='article.summary'>
       <h3>Summary</h3>
-      <div v-html='purge(article.summary)' ref='article_summary'></div>
+      <div v-html='sanitize(article.summary)' ref='article_summary'></div>
     </div>
     <div id='article-description' v-if='article.description'>
       <h3>Detailed</h3>
-      <div v-html='purge(article.description)' ref='article_description'></div>
+      <div v-html='sanitize(article.description)' ref='article_description'></div>
     </div>
   </div>
 </template>
@@ -45,7 +45,7 @@
         event.preventDefault();
         this.visit(event.target.href || event.target.parentElement.href);
       },
-      purge(text) {
+      sanitize(text) {
         return text
           .replace(class_regex, '')
           .replace(id_regex, '')
