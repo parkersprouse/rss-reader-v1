@@ -31,6 +31,7 @@
 
     <vue-context ref='feed_header_menu'>
       <ul>
+        <li @click='showEditFeed'>Edit Feed</li>
         <li @click='toggleBlur'>{{ this.blur.isBlurred ? 'Show' : 'Hide' }} Feed Entries</li>
         <li @click='showConfirmDelete'>Delete Feed</li>
       </ul>
@@ -47,6 +48,7 @@
   import parse from '@/lib/feedparser/feedparser-promised';
   import utils from '@/lib/utils';
   import ArticlePanel from '@/components/ArticlePanel.vue';
+  import EditFeedPanel from '@/components/EditFeedPanel.vue';
 
   export default {
     name: 'main-container',
@@ -70,6 +72,7 @@
         error: null,
         feed: null,
         feed_height: db.get('settings').value().feed_height || 'feed-lg',
+        feed_src: this.src,
       };
     },
     mounted() {
@@ -83,7 +86,7 @@
       isImage: utils.isImage,
       deleteFeed() {
         const feeds = db.get('feeds');
-        feeds.splice(feeds.indexOf(this.src), 1).write();
+        feeds.splice(feeds.indexOf(this.feed_src), 1).write();
         this.$root.$emit('feedDeleted');
       },
       formatDate(date) {
@@ -94,7 +97,7 @@
         return `${parsed_date.format('MM/DD/YYYY')} &sdot; ${parsed_date.format('hh:mm a')}`;
       },
       refreshFeed() {
-        parse(this.src)
+        parse(this.feed_src)
           .then((feed) => {
             const new_feed = { ...feed };
             new_feed.items = _.sortBy(feed.items, ['pubdate']).reverse();
@@ -139,9 +142,41 @@
           },
         );
       },
+      showEditFeed() {
+        this.$modal.show(
+          EditFeedPanel,
+          { feed: this.feed_src, updateFeed: this.updateFeed },
+          {
+            clickToClose: true,
+            height: 'auto',
+            id: 'edit-feed-panel',
+            name: 'edit-feed-panel',
+            scrollable: false,
+          },
+        );
+      },
       toggleBlur() {
         this.blur.isBlurred = !this.blur.isBlurred;
         this.$forceUpdate();
+      },
+      updateFeed(new_src) {
+        const feeds = db.get('feeds');
+        const index_to_update = feeds.indexOf(this.feed_src);
+        const new_feeds = feeds.value();
+
+        new_feeds[index_to_update] = new_src;
+        db.set('feeds', new_feeds).write();
+
+        this.feed_src = new_src;
+        this.refreshFeed();
+
+        this.$message({
+          customClass: 'el-message--success',
+          duration: 1500,
+          iconClass: 'el-icon-check',
+          message: 'Feed Updated',
+          type: 'success',
+        });
       },
       visit(link) {
         shell.openExternal(link);

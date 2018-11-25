@@ -371,7 +371,7 @@ body {
       right: 0;
     }
 
-    .settings-panel-btns {
+    .panel-btns {
       border-top: $settings-modal-buttons-container-border;
       margin-left: -1rem;
       margin-right: -1rem;
@@ -453,6 +453,29 @@ body {
           color: $article-modal-content-link-font-color;
         }
       }
+    }
+  }
+}
+
+#edit-feed-panel {
+
+  .v--modal-box.v--modal {
+    background-color: $settings-modal-background-color;
+    border: $settings-modal-border;
+    box-shadow: $settings-modal-box-shadow;
+    color: $settings-modal-font-color;
+    cursor: default;
+
+    .el-form-item__label {
+      color: $settings-modal-font-color;
+    }
+
+    .panel-btns {
+      border-top: $settings-modal-buttons-container-border;
+      margin-left: -1rem;
+      margin-right: -1rem;
+      padding-top: 1rem;
+      text-align: center;
     }
   }
 }

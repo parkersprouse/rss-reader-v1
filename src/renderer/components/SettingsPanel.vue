@@ -19,7 +19,7 @@
         </el-select>
       </el-form-item>
     </el-form>
-    <div class='settings-panel-btns'>
+    <div class='panel-btns'>
       <el-button @click='saveSettings' type='primary'>Save</el-button>
       <el-button @click='closePanel' type='dark'>Close</el-button>
     </div>
