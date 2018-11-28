@@ -120,7 +120,7 @@
           `,
           props: ['deleteFeed', 'feedName'],
         },
-        { deleteFeed: this.deleteFeed, feedName: this.feed.title },
+        { deleteFeed: this.deleteFeed, feedName: this.feed ? this.feed.title : this.feed_src },
         {
           clickToClose: true,
           height: 'auto',
