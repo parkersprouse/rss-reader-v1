@@ -1,5 +1,5 @@
 <template>
-  <div v-if='mac_os' id='titlebar'>
+  <div v-if='mac_os' id='titlebar' class='mac'>
     <div id='titlebar-left'>
       &nbsp;
     </div>
