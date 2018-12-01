@@ -1,5 +1,13 @@
 <template>
-  <div id='titlebar'>
+  <div v-if='mac_os' id='titlebar'>
+    <div id='titlebar-left'>
+      &nbsp;
+    </div>
+    <div id='titlebar-right'>
+      RSS Feed Reader
+    </div>
+  </div>
+  <div v-else id='titlebar'>
     <div id='titlebar-left'>
       RSS Feed Reader
     </div>
@@ -31,6 +39,7 @@
     data() {
       return {
         is_maximized: window.isMaximized(),
+        mac_os: remote.process.platform === 'darwin',
         settings_panel_open: false,
       };
     },
