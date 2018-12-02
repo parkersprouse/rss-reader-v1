@@ -5,6 +5,7 @@
 
 $sidebar-width: 200px;
 $titlebar-height: 30px;
+$mac-titlebar-height: 20px;
 $separator-color: #555555;
 
 $app-bg-color: rgb(63, 65, 71);
@@ -237,10 +238,7 @@ body {
   -webkit-app-region: drag;
 
   &.mac {
-    #titlebar-right {
-      font-weight: bold;
-      padding-right: 0.5rem;
-    }
+    height: $mac-titlebar-height;
   }
 
   #titlebar-left {
@@ -279,6 +277,10 @@ body {
   display: flex;
   height: calc(100vh - #{$titlebar-height});
   width: 100vw;
+
+  &.mac {
+    height: calc(100vh - #{$mac-titlebar-height});
+  }
 }
 
 #sidebar {

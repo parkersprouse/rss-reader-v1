@@ -1,12 +1,5 @@
 <template>
-  <div v-if='mac_os' id='titlebar' class='mac'>
-    <div id='titlebar-left'>
-      &nbsp;
-    </div>
-    <div id='titlebar-right'>
-      RSS Feed Reader
-    </div>
-  </div>
+  <div v-if='mac_os' id='titlebar' class='mac'>&nbsp;</div>
   <div v-else id='titlebar'>
     <div id='titlebar-left'>
       RSS Feed Reader
