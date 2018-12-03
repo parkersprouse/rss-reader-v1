@@ -1,21 +1,29 @@
 <template>
   <div class='sidebar-inner'>
     <div>
-      <el-input placeholder='Feed URL' v-model='new_feed' style='margin-bottom: 0.5rem;'></el-input>
-      <el-button @click='submitNewFeed' class='fullwidth' type='dark'>
-        <span class='fas fa-plus'></span> Add
-      </el-button>
+      <div>
+        <el-input placeholder='Feed URL' v-model='new_feed' style='margin-bottom: 0.5rem;'></el-input>
+        <el-button @click='submitNewFeed' class='fullwidth' type='dark'>
+          <span class='fas fa-plus'></span> Add
+        </el-button>
+      </div>
+      <hr class='separator-horizonal' />
+      <div>
+        <el-button @click='refreshFeeds' class='fullwidth' type='dark'>
+          <span class='fas fa-sync-alt'></span> Refresh Feeds
+        </el-button>
+      </div>
     </div>
-    <hr class='separator-horizonal' />
     <div>
-      <el-button @click='refreshFeeds' class='fullwidth' type='dark'>
-        <span class='fas fa-sync-alt'></span> Refresh Feeds
+      <el-button @click='openSettingsPanel' class='fullwidth' type='dark'>
+        <span class='fas fa-cog'></span> Settings
       </el-button>
     </div>
   </div>
 </template>
 
 <script>
+  import SettingsPanel from '@/components/SettingsPanel';
   import db from '@/lib/db';
 
   export default {
@@ -26,6 +34,19 @@
       };
     },
     methods: {
+      openSettingsPanel() {
+        this.$modal.show(
+          SettingsPanel,
+          null,
+          {
+            clickToClose: true,
+            height: 'auto',
+            id: 'settings-panel',
+            name: 'settings-panel',
+            scrollable: false,
+          },
+        );
+      },
       refreshFeeds() {
         this.$root.$emit('feedsRefreshed');
         this.$message({

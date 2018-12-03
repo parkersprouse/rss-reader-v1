@@ -5,10 +5,6 @@
       RSS Feed Reader
     </div>
     <div id='titlebar-right'>
-      <button @click='openSettingsPanel'>
-        <span class='fas fa-cog'></span>
-      </button>
-      &nbsp;<span class='separator-vertical'>|</span>&nbsp;
       <!--
         This is intentionally ugly: https://css-tricks.com/fighting-the-space-between-inline-block-elements/
         This is the easiest solution and I'm lazy.
@@ -23,7 +19,6 @@
 
 <script>
   import { remote } from 'electron';
-  import SettingsPanel from '@/components/SettingsPanel';
 
   const window = remote.getCurrentWindow();
 
@@ -57,19 +52,6 @@
       },
       minimizeWindow() {
         window.minimize();
-      },
-      openSettingsPanel() {
-        this.$modal.show(
-          SettingsPanel,
-          null,
-          {
-            clickToClose: true,
-            height: 'auto',
-            id: 'settings-panel',
-            name: 'settings-panel',
-            scrollable: false,
-          },
-        );
       },
     },
   };
