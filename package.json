@@ -52,7 +52,7 @@
     }
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "electron-util": "^0.9.1",
     "electron-window-state": "^5.0.2",
     "element-ui": "^2.4.8",
