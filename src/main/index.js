@@ -35,6 +35,9 @@ function createWindow() {
     title: 'RSS Feed Reader',
     titleBarStyle: mac_os ? 'hidden' : 'default',
     useContentSize: false,
+    webPreferences: {
+      nodeIntegration: true
+    },
     width: windowState.width,
     x: windowState.x,
     y: windowState.y
@@ -54,15 +57,15 @@ function generateMenu() {
     {
       label: app.getName(),
       submenu: [
-        { role: 'about' },
+        { role: 'about', label: 'About RSS Feed Reader' },
         { type: 'separator' },
         { role: 'services', submenu: [] },
         { type: 'separator' },
-        { role: 'hide' },
+        { role: 'hide', label: 'Hide RSS Feed Reader' },
         { role: 'hideothers' },
         { role: 'unhide' },
         { type: 'separator' },
-        { role: 'quit' }
+        { role: 'quit', label: 'Quit RSS Feed Reader' }
       ]
     },
     {
@@ -70,7 +73,7 @@ function generateMenu() {
       submenu: [
         { role: 'reload' },
         { role: 'forcereload' },
-        { role: 'toggledevtools' },
+        // { role: 'toggledevtools' },
         { type: 'separator' },
         { role: 'resetzoom' },
         { role: 'zoomin' },
@@ -87,9 +90,9 @@ function generateMenu() {
 
 app.on('ready', () => {
   // in case we want to allow a mac menu, allow here
-  // if (mac_os) {
-  //   generateMenu();
-  // }
+  if (mac_os) {
+    generateMenu();
+  }
   createWindow();
 });
 
