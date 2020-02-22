@@ -1,10 +1,14 @@
 {
   "name": "rss-feed-reader",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Parker Sprouse <parker@parkersprouse.me>",
   "description": "A desktop RSS feed reader",
   "license": "MIT",
   "main": "./dist/electron/main.js",
+  "engines": {
+    "node": "10.13.0",
+    "npm": "6.4.1"
+  },
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
     "build:dir": "node .electron-vue/build.js && electron-builder --dir",
